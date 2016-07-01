@@ -4,8 +4,14 @@
 <jsp:directive.include file="header.jsp" />
 <body>
 <jsp:directive.include file="navBar.jsp" />
-<div class="alert alert-success" role="alert"> 
-	<strong>Hello, vous êtes connecté en tant que <%= user.getLogin() %></strong>
+<div class="helloGuy" role="alert"> 
+	<div>
+	<strong>Hello, vous êtes connecté en tant que <%= user.getLogin() %></strong><br><br>
+	<button onclick='$(".helloGuy").hide();' type="button" class="btn btn-secondary" style="
+    color: black;
+">Ok
+</button>
+	</div>
 </div>
 
 	<!-- Button trigger modal -->
