@@ -34,7 +34,7 @@ public class UserManagerDB implements IUserManager {
 	public Connection getConnection()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		try {
-			String url = "jdbc:mysql://localhost:8889/esgi";
+			String url = "jdbc:mysql://localhost:3306/esgi";
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(url, "root", "root");
 		} catch (Exception e) {
