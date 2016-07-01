@@ -94,13 +94,9 @@ public class UserServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 			}
 		} else {
-			System.out.println(login);
-			request.getSession().setAttribute(UserServlet.USER_SESSION, this.userManager.getDefaultUser());
-			response.sendRedirect("home");
-			
-			//request.setAttribute("errorMessage", "Utilisateur introuvable");
-			//request.setAttribute("action", "login");
-			//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+			request.setAttribute("errorMessage", "Utilisateur introuvable");
+			request.setAttribute("action", "login");
+			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 		}
 
 	}

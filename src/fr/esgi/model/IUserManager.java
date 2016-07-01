@@ -9,7 +9,6 @@ public interface IUserManager {
 	boolean createUser(String login, String password, String role, String email);
 	public boolean DeleteUser(String login);
 	public User getUser(String login);
-	public User getDefaultUser();
 	public List<User> allUsers();
 	boolean editProfile(String nom, String prenom, Integer taille, Integer objectif_poids, Date date_naissance, Integer id);
 	boolean editCompte(String email, String password, Integer id);

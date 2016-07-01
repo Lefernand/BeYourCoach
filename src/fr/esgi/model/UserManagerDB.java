@@ -20,7 +20,7 @@ public class UserManagerDB implements IUserManager {
 
 		try {
 			this.connection = this.getConnection();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -31,16 +31,33 @@ public class UserManagerDB implements IUserManager {
 	 * Fonction de Connexion à la base de donnée.
 	 *
 	 */
-	public Connection getConnection()
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public Connection getConnection() throws Exception {
+		String url = "jdbc:mysql://localhost:3306/esgi";
+		String driver = "com.mysql.jdbc.Driver";
+	    String username = "root";
+	    String password = "root";
+
 		try {
-			String url = "jdbc:mysql://localhost:8889/esgi";
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, "root", "root");
-		} catch (Exception e) {
-			System.err.println("Erreur de connexion à la base de donnée");
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			System.out.println("Where is your MySQL JDBC Driver?");
+			e.printStackTrace();
+			return null;
 		}
 
+		System.out.println("MySQL JDBC Driver Registered!");
+		Connection connection = null;
+
+		try {
+			connection = DriverManager
+			.getConnection(url, username, password);
+
+		} catch (SQLException e) {
+			System.out.println("Connection Failed! Check output console");
+			e.printStackTrace();
+			return connection;
+		}
+		
 		return connection;
 	}
 
@@ -117,25 +134,6 @@ public class UserManagerDB implements IUserManager {
 		}
 
 		return resultat == 1;
-	}
-	
-	/*
-	 * Fonction Get un User par son login
-	 * 
-	 */
-	@Override
-	public User getDefaultUser() {
-
-
-	    String birth = "1993-02-26";
-	    String create = "2016-05-13";
-	    
-	    java.sql.Date birthDate = java.sql.Date.valueOf(birth);
-	    java.sql.Date creatDate = java.sql.Date.valueOf(create);
-		
-		User user = new User("admin", "admin", "admin", "admin@admin.fr", 1, "admin", "admin", 180, 80, birthDate, creatDate);
-	
-		return user;
 	}
 
 	/*
