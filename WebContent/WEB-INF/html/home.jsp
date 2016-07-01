@@ -2,7 +2,7 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
-<body>
+<body class="profil">
 <jsp:directive.include file="navBar.jsp" />
 <div class="helloGuy" role="alert"> 
 	<div>
