@@ -39,6 +39,7 @@ public class UserManagerDB implements IUserManager {
 			this.connection = DriverManager.getConnection(url, "root", "root");
 		} catch (Exception e) {
 			System.err.println("Erreur de connexion à la base de donnée");
+			e.printStackTrace();
 		}
 
 		return connection;

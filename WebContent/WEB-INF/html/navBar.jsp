@@ -12,12 +12,7 @@
         	}
         %>
         <%
-        	if(user != null && user.getRole().equals("admin")) {
-        		%>
-        		<li><a href="create">Create user</a></li>
-        		<li><a href="list">List user</a></li>
-        		<%
-        	}
+        	
         %>
         
         <%

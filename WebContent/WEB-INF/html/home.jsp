@@ -51,8 +51,8 @@
         		<p>Votre poids du jour à bien été ajouté et est de : <%= request.getAttribute("poidDuJour") %> kg</p><%
         	} %>
         
-  
-      
+  	<h3>Statistiques</h3>
+      <jsp:directive.include file="stats.jsp" />
     </div>
   </div>
 
