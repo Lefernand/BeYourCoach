@@ -5,13 +5,38 @@
 <html>
 <jsp:directive.include file="header.jsp" />
 <body>
-<jsp:directive.include file="navBar.jsp" />
-	<h1>${action}</h1>
-	<form method="get" action="${action}">
-		 <div class="form-group">
-		    <label for="login">Login</label>
-		    <input type="text" class="form-control" name="user" id="login" placeholder="Enter login">
+
+
+
+<div class="site-wrapper">
+
+  <div class="site-wrapper-inner">
+
+    <div class="cover-container">
+
+		<jsp:directive.include file="navBar.jsp" />
+
+
+		<div class="inner cover">
+		  <h1 class="cover-heading">Connexion</h1>
+		  <div class="row">
+		  	<div class="col-sm-offset-3 col-sm-6">
+			  	<form method="get" action="${action}">
+				 <div class="form-group">
+				    <label for="login"></label>
+				    <input type="text" class="form-control" name="user" id="login" placeholder="Entrer votre login">
+				  </div>
+				
+				 <div class="form-group">
+				    <label for="password"></label>
+				    <input type="text" class="form-control" name="password" id="password" placeholder="Entret votre password">
+				  </div>
+				  
+				  <button type="submit" class="btn btn-default">Se connecter</button>
+				</form>
+		  	</div>
 		  </div>
+		</div>
 		
 		 <div class="form-group">
 		    <label for="password">Password</label>
@@ -19,7 +44,11 @@
 		  </div>
 		  
 		  <button type="submit" class="btn btn-default">Submit</button>
-	</form>
+    </div>
+
+  </div>
+
+</div>
 	
 </body>
 </html>

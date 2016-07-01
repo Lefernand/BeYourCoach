@@ -8,6 +8,7 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/admin.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     

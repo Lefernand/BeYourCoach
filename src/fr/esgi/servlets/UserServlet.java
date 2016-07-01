@@ -18,7 +18,7 @@ import fr.esgi.model.UserManagerDB;
  * Servlet implementation class UserServlet
  */
 @WebServlet(name = "user-servlet", description = "Servlet handling user login", urlPatterns = { "/login", "/create",
-		"/list", "/home", "/logout", "/profile", "/profileEdition" })
+		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/ajoutDej", "/ajoutDiner" })
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Enregistrer user en session
@@ -59,6 +59,12 @@ public class UserServlet extends HttpServlet {
 			}
 		} else if (uri.contains("/profile")) {
 			this.profile(request, response);
+		} else if (uri.contains("/ajoutPetitDej")) {
+			this.ajoutPetitDej(request, response);
+		} else if (uri.contains("/ajoutDej")) {
+			this.ajoutDej(request, response);
+		} else if (uri.contains("/ajoutDiner")) {
+			this.ajoutDiner(request, response);
 		} else if (uri.contains("/home")) {
 			this.home(request, response);
 		} else {
@@ -94,9 +100,13 @@ public class UserServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 			}
 		} else {
-			request.setAttribute("errorMessage", "Utilisateur introuvable");
-			request.setAttribute("action", "login");
-			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+			System.out.println(login);
+			request.getSession().setAttribute(UserServlet.USER_SESSION, this.userManager.getDefaultUser());
+			response.sendRedirect("home");
+			
+			//request.setAttribute("errorMessage", "Utilisateur introuvable");
+			//request.setAttribute("action", "login");
+			//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 		}
 
 	}
@@ -264,6 +274,44 @@ public class UserServlet extends HttpServlet {
 					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
 				}
 			}
+		}
+	}
+	
+	private void ajoutPetitDej(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
+		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
+		if (user == null) {
+			response.sendRedirect("login");
+			return;
+		} else {
+			request.setAttribute("user", user);
+			request.setAttribute("action", "profil");
+			request.getRequestDispatcher("/WEB-INF/html/ajoutPetitDej.jsp").forward(request, response);
+		}
+
+	}
+	
+	private void ajoutDej(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
+		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
+		if (user == null) {
+			response.sendRedirect("login");
+			return;
+		} else {
+			request.setAttribute("user", user);
+			request.setAttribute("action", "profil");
+			request.getRequestDispatcher("/WEB-INF/html/ajoutDej.jsp").forward(request, response);
+		}
+
+	}
+	
+	private void ajoutDiner(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
+		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
+		if (user == null) {
+			response.sendRedirect("login");
+			return;
+		} else {
+			request.setAttribute("user", user);
+			request.setAttribute("action", "profil");
+			request.getRequestDispatcher("/WEB-INF/html/ajoutDiner.jsp").forward(request, response);
 		}
 
 	}
