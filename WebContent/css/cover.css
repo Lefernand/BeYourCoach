@@ -27,16 +27,20 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-color: #f7f7f7;
 }
 
-body {
+body.login {
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
   background: url(../img/bg.jpeg) center center;
   background-size: cover;
+  background-attachment: fixed;
+  padding-top: 104px;
 }
+
+
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
@@ -59,6 +63,9 @@ body {
 /* Padding for spacing */
 .inner {
   padding: 30px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 
@@ -96,6 +103,11 @@ body {
 .masthead-nav > .active > a:focus {
   color: #fff;
   border-bottom-color: #fff;
+}
+
+.masthead .inner.shrink {
+	padding: 15px;
+    background: #000;
 }
 
 @media (min-width: 768px) {
@@ -140,6 +152,7 @@ body {
   .masthead {
     position: fixed;
     top: 0;
+    z-index:100000;
   }
   .mastfoot {
     position: fixed;
@@ -157,7 +170,7 @@ body {
   }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 768px) {
   .masthead,
   .mastfoot,
   .cover-container {

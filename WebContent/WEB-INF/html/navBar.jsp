@@ -1,11 +1,10 @@
 <jsp:directive.page contentType="text/html; charset=ISO-8859-1" />
-
 <div class="masthead clearfix">
-  <div class="inner">
+  <div class="inner clearfix">
   	<img class="masthead-brand" src="img/logo.png" style="max-width: 200px;">
     <nav>
       <ul class="nav masthead-nav">
-        <li><a href="/BeYourCoach/home">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
         <%
         	if(request.getSession().getAttribute("userSession") == null) {
         		%>
@@ -14,12 +13,7 @@
         	}
         %>
         <%
-        	if(user != null && user.getRole().equals("admin")) {
-        		%>
-        		<li><a href="create">Create user</a></li>
-        		<li><a href="list">List user</a></li>
-        		<%
-        	}
+        	
         %>
         
         <%

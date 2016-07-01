@@ -4,7 +4,7 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
-<body>
+<body class="login">
 
 
 
@@ -37,7 +37,6 @@
 		  	</div>
 		  </div>
 		</div>
-		
     </div>
 
   </div>
