@@ -4,7 +4,7 @@
   	<img class="masthead-brand" src="img/logo.png" style="max-width: 200px;">
     <nav>
       <ul class="nav masthead-nav">
-        <li><a href="/BeYourCoach/home">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
         <%
         	if(request.getSession().getAttribute("userSession") == null) {
         		%>
