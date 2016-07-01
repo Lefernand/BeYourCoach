@@ -21,11 +21,11 @@
 		  <div class="row">
 		  	<div class="col-sm-offset-1 col-sm-10">
 				
-				<div class="form-group">
+				<div class="form-group text-center">
 				    <label for="search">Recherche</label>
 					<input list="aliments" type="text" class="form-control" name="recherche" id="recherche" placeholder="Recherche">
 					
-					<button id="recherche-btn" type="submit" class="btn btn-success">Rechercher</button>
+					<button id="recherche-btn" type="submit" class="btn btn-success text-center">Rechercher</button>
 				</div>
 				
 				<div id="choix">
