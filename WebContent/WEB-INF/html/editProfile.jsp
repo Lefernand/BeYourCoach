@@ -7,9 +7,6 @@
 <html>
 <jsp:directive.include file="header.jsp" />
 <body class="login">
-
-
-
 <div class="site-wrapper">
 
   <div class="site-wrapper-inner">
@@ -17,7 +14,6 @@
     <div class="cover-container">
 
 		<jsp:directive.include file="navBar.jsp" />
-		
 		
 		<%
 		String nom;
@@ -71,12 +67,11 @@
 		}		
 		
 	%>
-
-
 		<div class="inner cover">
 		  <h1 class="cover-heading">Editer mon profile</h1>
 		  <div class="row">
 		  	<div class="col-sm-offset-1 col-sm-4">
+			  	<h3> Profile </h3>
 			  	<form method="get" action="${action}">
 					 <input type="hidden" name="typeAction" id="typeAction" value="profile">
 					 <input type="hidden" name="id" id="id" value="<%=id%>">
@@ -108,6 +103,7 @@
 				</form>
 			</div>
 		  	<div class="col-sm-offset-1 col-sm-4">
+		  		<h3> Compte </h3>
 				<form method="get" action="${action}">
 					<input type="hidden" name="id" id="id" value="<%=id%>">
 					 <input type="hidden" name="typeAction" id="typeAction" value="compte">
