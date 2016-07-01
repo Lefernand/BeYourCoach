@@ -34,7 +34,7 @@ public class UserManagerDB implements IUserManager {
 	public Connection getConnection()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		try {
-			String url = "jdbc:mysql://localhost:3306/esgi";
+			String url = "jdbc:mysql://localhost:8889/esgi";
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(url, "root", "root");
 		} catch (Exception e) {
@@ -118,6 +118,25 @@ public class UserManagerDB implements IUserManager {
 
 		return resultat == 1;
 	}
+	
+	/*
+	 * Fonction Get un User par son login
+	 * 
+	 */
+	@Override
+	public User getDefaultUser() {
+
+
+	    String birth = "1993-02-26";
+	    String create = "2016-05-13";
+	    
+	    java.sql.Date birthDate = java.sql.Date.valueOf(birth);
+	    java.sql.Date creatDate = java.sql.Date.valueOf(create);
+		
+		User user = new User("admin", "admin", "admin", "admin@admin.fr", 1, "admin", "admin", 180, 80, birthDate, creatDate);
+	
+		return user;
+	}
 
 	/*
 	 * Fonction Get un User par son login
@@ -157,7 +176,8 @@ public class UserManagerDB implements IUserManager {
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			return user;
+			//e.printStackTrace();
 		}
 
 		return user;

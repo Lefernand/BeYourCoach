@@ -1,13 +1,14 @@
 <jsp:directive.page contentType="text/html; charset=ISO-8859-1" />
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="home">Home</a></li>
+<div class="masthead clearfix">
+  <div class="inner">
+  	<img class="masthead-brand" src="img/logo.png" style="max-width: 200px;">
+    <nav>
+      <ul class="nav masthead-nav">
+        <li><a href="/BeYourCoach/home">Home</a></li>
         <%
         	if(request.getSession().getAttribute("userSession") == null) {
         		%>
-        		<li><a href="login">Login</a></li>
+        		<li class="active"><a href="login">Login</a></li>
         		<%
         	}
         %>
@@ -29,8 +30,8 @@
         	}
         %>
       </ul>
-    </div><!--/.nav-collapse -->
+    </nav>
   </div>
-</nav>
-<br><br>
+</div>
+
 <jsp:directive.include file="error.jsp" />
