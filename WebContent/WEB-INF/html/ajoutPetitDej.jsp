@@ -6,6 +6,7 @@
 <jsp:directive.include file="header.jsp" />
 <body>
 <jsp:directive.include file="navBar.jsp" />
+  <div class="container">
 	<h1>Ajouter un petit dej</h1>
 	
 	<div class="form-group">
@@ -33,6 +34,7 @@
 		</table>
 		<button type="submit" class="btn btn-default">Enregistrer le repas</button>
 	</form>
+  </div>
 	
 	
 	<script>
