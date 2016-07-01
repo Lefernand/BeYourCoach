@@ -50,15 +50,15 @@
         		%>
         		<p>Votre poids du jour à bien été ajouté et est de : <%= request.getAttribute("poidDuJour") %> kg</p><%
         	} %>
-        
-  	<h3>Statistiques</h3>
-      <jsp:directive.include file="stats.jsp" />
 
     </div>
   </div>
   <a href="ajoutPetitDej" type="button" class="btn btn-warning" >+ petit dej</a>
   <a href="ajoutDej" type="button" class="btn btn-warning" >+déjeuné</a>
   <a href="ajoutDiner" type="button" class="btn btn-warning" >+diner</a>
+
+	  <h3 class="title" >Statistiques</h3>
+      <jsp:directive.include file="stats.jsp" />
 
 <script>
 

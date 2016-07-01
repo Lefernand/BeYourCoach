@@ -37,13 +37,6 @@
 		  	</div>
 		  </div>
 		</div>
-		
-		 <div class="form-group">
-		    <label for="password">Password</label>
-		    <input type="text" class="form-control" name="password" id="password" placeholder="Enter password">
-		  </div>
-		  
-		  <button type="submit" class="btn btn-default">Submit</button>
     </div>
 
   </div>
