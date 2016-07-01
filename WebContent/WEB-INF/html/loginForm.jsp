@@ -24,12 +24,12 @@
 			  	<form method="get" action="${action}">
 				 <div class="form-group">
 				    <label for="login"></label>
-				    <input type="text" class="form-control" name="user" id="login" placeholder="Entrer votre login">
+				    <input type="text" class="form-control" name="user" id="login" placeholder="Entrez votre login">
 				  </div>
 				
 				 <div class="form-group">
 				    <label for="password"></label>
-				    <input type="text" class="form-control" name="password" id="password" placeholder="Entret votre password">
+				    <input type="password" class="form-control" name="password" id="password" placeholder="Entrez votre password">
 				  </div>
 				  
 				  <button type="submit" class="btn btn-default">Se connecter</button>
