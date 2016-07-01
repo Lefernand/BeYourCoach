@@ -1,3 +1,15 @@
-<h2 style="color: red">${ errorMessage }</h2>
-<h2 style="color: green">${ success }</h2>
-<h2 style="color: blue">${ infoMessage }</h2>
+<% if(request.getParameter("errorMessage") != null) { %>
+	<div class="alert alert-danger" role="alert">
+		${ errorMessage }
+	</div>
+<% } %>
+<% if(request.getParameter("success") != null) { %>
+<div class="alert alert-success" role="alert">
+	${ success }
+</div>
+<% } %>
+<% if(request.getParameter("infoMessage") != null) { %>
+<div class="alert alert-info" role="alert">
+	${ infoMessage }	
+</div>
+<% } %>

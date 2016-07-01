@@ -2,17 +2,20 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
-<body>
+<body class="profil">
 <jsp:directive.include file="navBar.jsp" />
-<div class="alert alert-success" role="alert"> 
-	<strong>Hello, vous êtes connecté en tant que <%= user.getLogin() %></strong>
+<div class="helloGuy" role="alert"> 
+	<div>
+	<strong>Hello, vous êtes connecté en tant que <%= user.getLogin() %></strong><br><br>
+	<button onclick='$(".helloGuy").hide();' type="button" class="btn btn-secondary" style="
+    color: black;
+">Ok
+</button>
+	</div>
 </div>
 
 	<!-- Button trigger modal -->
   <!-- Trigger the modal with a button -->
-  	
-
-	<h1><%= request.getAttribute("booleanPoids") %></h1>
 
 	<%
         	if(request.getAttribute("booleanPoids").equals(true)) {
@@ -50,15 +53,15 @@
         		%>
         		<p>Votre poids du jour à bien été ajouté et est de : <%= request.getAttribute("poidDuJour") %> kg</p><%
         	} %>
-        
-  	  
-  	
-      
+
     </div>
   </div>
   <a href="ajoutPetitDej" type="button" class="btn btn-warning" >+ petit dej</a>
   <a href="ajoutDej" type="button" class="btn btn-warning" >+déjeuné</a>
   <a href="ajoutDiner" type="button" class="btn btn-warning" >+diner</a>
+
+	  <h3 class="title" >Statistiques</h3>
+      <jsp:directive.include file="stats.jsp" />
 
 <script>
 
