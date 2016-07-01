@@ -3,7 +3,7 @@
   <div class="container">
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/dropbox/home">Home</a></li>
+        <li class="active"><a href="home">Home</a></li>
         <%
         	if(request.getSession().getAttribute("userSession") == null) {
         		%>
