@@ -6,9 +6,20 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
-<body>
-<jsp:directive.include file="navBar.jsp" />	
-	<%
+<body class="login">
+
+
+
+<div class="site-wrapper">
+
+  <div class="site-wrapper-inner">
+
+    <div class="cover-container">
+
+		<jsp:directive.include file="navBar.jsp" />
+		
+		
+		<%
 		String nom;
 		String prenom;
 		Integer taille;
@@ -60,53 +71,66 @@
 		}		
 		
 	%>
-	<div class="container">
-		<form method="get" action="${action}">
-			 <input type="hidden" name="typeAction" id="typeAction" value="profile">
-			 <input type="hidden" name="id" id="id" value="<%=id%>">
-			 
-			 <div class="form-group">
-			    <label for="nom">Nom</label>
-			    <input type="text" class="form-control" name="nom" id="nom" value="<%=nom%>">
-			 </div>
-			 <div class="form-group">
-			    <label for="prenom">Prenom</label>
-			    <input type="text" class="form-control" name="prenom" id="prenom" value="<%=prenom%>">
-			 </div>
-			 <div class="form-group">
-			    <label for="taille">Taille (cm)</label>
-			    <input type="number" class="form-control" name="taille" id="taille" value="<%= taille %>">
-			 </div>
-			 
-			 <div class="form-group">
-			    <label for="objectif_poids">Objectif poids (kg)</label>
-			    <input type="number" class="form-control" name="objectif_poids" id="objectif_poids" value="<%=obj_poids%>">
-			 </div>
-			 
-			 <div class="form-group">
-			    <label for="date_naissance">Date de naissance</label>
-			    <input type="date" class="form-control" name="date_naissance" id="date_naissance" value="<%=date_naissance %>" >
-			 </div>
-			 
-			 <button type="submit" class="btn btn-success">Submit</button>
-		</form>
-		
-		<hr>
-		<form method="get" action="${action}">
-			<input type="hidden" name="id" id="id" value="<%=id%>">
-			 <input type="hidden" name="typeAction" id="typeAction" value="compte">
-			 <div class="form-group">
-			    <label for="email">Email</label>
-			    <input type="text" class="form-control" name="email" id="email" value="<%=email%>">
-			  </div>
-			
-			 <div class="form-group">
-			    <label for="password">Password</label>
-			    <input type="text" class="form-control" name="password" id="password" value="<%=password%>">
-			 </div>
-			  
-			 <button type="submit" class="btn btn-success">Submit</button>
-		</form>
-	</div>
+
+
+		<div class="inner cover">
+		  <h1 class="cover-heading">Editer mon profile</h1>
+		  <div class="row">
+		  	<div class="col-sm-offset-1 col-sm-4">
+			  	<form method="get" action="${action}">
+					 <input type="hidden" name="typeAction" id="typeAction" value="profile">
+					 <input type="hidden" name="id" id="id" value="<%=id%>">
+					 
+					 <div class="form-group">
+					    <label for="nom">Nom</label>
+					    <input type="text" class="form-control" name="nom" id="nom" value="<%=nom%>">
+					 </div>
+					 <div class="form-group">
+					    <label for="prenom">Prenom</label>
+					    <input type="text" class="form-control" name="prenom" id="prenom" value="<%=prenom%>">
+					 </div>
+					 <div class="form-group">
+					    <label for="taille">Taille (cm)</label>
+					    <input type="number" class="form-control" name="taille" id="taille" value="<%= taille %>">
+					 </div>
+					 
+					 <div class="form-group">
+					    <label for="objectif_poids">Objectif poids (kg)</label>
+					    <input type="number" class="form-control" name="objectif_poids" id="objectif_poids" value="<%=obj_poids%>">
+					 </div>
+					 
+					 <div class="form-group">
+					    <label for="date_naissance">Date de naissance</label>
+					    <input type="date" class="form-control" name="date_naissance" id="date_naissance" value="<%=date_naissance %>" >
+					 </div>
+					 
+					 <button type="submit" class="btn btn-success">Submit</button>
+				</form>
+			</div>
+		  	<div class="col-sm-offset-1 col-sm-4">
+				<form method="get" action="${action}">
+					<input type="hidden" name="id" id="id" value="<%=id%>">
+					 <input type="hidden" name="typeAction" id="typeAction" value="compte">
+					 <div class="form-group">
+					    <label for="email">Email</label>
+					    <input type="text" class="form-control" name="email" id="email" value="<%=email%>">
+					  </div>
+					
+					 <div class="form-group">
+					    <label for="password">Password</label>
+					    <input type="text" class="form-control" name="password" id="password" value="<%=password%>">
+					 </div>
+					  
+					 <button type="submit" class="btn btn-success">Submit</button>
+				</form>
+		  	</div>
+		  </div>
+		</div>
+    </div>
+
+  </div>
+
+</div>
+
 </body>
 </html>
