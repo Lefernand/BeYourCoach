@@ -4,35 +4,58 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
-<body>
-<jsp:directive.include file="navBar.jsp" />
-	<h1>Ajouter un petit dej</h1>
+<body class="profile">
+
+
+
+<div class="site-wrapper">
+
+  <div class="site-wrapper-inner">
+
+    <div class="cover-container">
+
+		<jsp:directive.include file="navBar.jsp" />
+
+		<div class="inner cover">
+		  <h1 class="cover-heading text-center">Ajouter un petit dej</h1>
+		  <div class="row">
+		  	<div class="col-sm-offset-1 col-sm-10">
+				
+				<div class="form-group">
+				    <label for="search">Recherche</label>
+					<input list="aliments" type="text" class="form-control" name="recherche" id="recherche" placeholder="Recherche">
+					
+					<button id="recherche-btn" type="submit" class="btn btn-success">Rechercher</button>
+				</div>
+				
+				<div id="choix">
+				</div>
+				
+				<form method="get" action="ajoutPetitDej" id="form-ajoutMeal" >
+					 <table class="table">
+						 <thead>
+						  <tr>
+						     <th>Nom</th>
+						     <th>Image</th>
+						     <th>Energie</th>
+						  </tr>
+						 </thead>
+						 
+						 <tbody id="tbody-form">
+						 </tbody>
+					</table>
+					<button type="submit" class="btn btn-default">Enregistrer le repas</button>
+				</form>
 	
-	<div class="form-group">
-	    <label for="search">Recherche</label>
-		<input list="aliments" type="text" class="form-control" name="recherche" id="recherche" placeholder="Recherche">
-		
-		<button id="recherche-btn" type="submit" class="btn btn-success">Rechercher</button>
-	</div>
 	
-	<div id="choix">
-	</div>
-	
-	<form method="get" action="ajoutPetitDej" id="form-ajoutMeal" >
-		 <table class="table">
-			 <thead>
-			  <tr>
-			     <th>Nom</th>
-			     <th>Image</th>
-			     <th>Energie</th>
-			  </tr>
-			 </thead>
-			 
-			 <tbody id="tbody-form">
-			 </tbody>
-		</table>
-		<button type="submit" class="btn btn-default">Enregistrer le repas</button>
-	</form>
+		  	</div>
+		  </div>
+		</div>
+    </div>
+
+  </div>
+
+</div>
 	
 	
 	<script>
