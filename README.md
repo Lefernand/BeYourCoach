@@ -1,2 +1,0 @@
-# BeYourCoach
-Fitness app
