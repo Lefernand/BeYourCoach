@@ -20,6 +20,7 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="js/Chart.min.js"></script>
+    <script src="js/main.js"></script>
     
   </head>
  <% User user = ((User)request.getSession().getAttribute("userSession")); %>

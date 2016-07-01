@@ -10,9 +10,6 @@
 
 	<!-- Button trigger modal -->
   <!-- Trigger the modal with a button -->
-  	
-
-	<h1><%= request.getAttribute("booleanPoids") %></h1>
 
 	<%
         	if(request.getAttribute("booleanPoids").equals(true)) {

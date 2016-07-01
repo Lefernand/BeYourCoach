@@ -36,6 +36,7 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
   background: url(../img/bg.jpeg) center center;
   background-size: cover;
+  padding-top: 104px;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -59,6 +60,9 @@ body {
 /* Padding for spacing */
 .inner {
   padding: 30px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 
@@ -96,6 +100,11 @@ body {
 .masthead-nav > .active > a:focus {
   color: #fff;
   border-bottom-color: #fff;
+}
+
+.masthead .inner.shrink {
+	padding: 15px;
+    background: #000;
 }
 
 @media (min-width: 768px) {
@@ -157,7 +166,7 @@ body {
   }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 768px) {
   .masthead,
   .mastfoot,
   .cover-container {

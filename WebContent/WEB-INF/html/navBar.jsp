@@ -1,6 +1,6 @@
 <jsp:directive.page contentType="text/html; charset=ISO-8859-1" />
 <div class="masthead clearfix">
-  <div class="inner">
+  <div class="inner clearfix">
   	<img class="masthead-brand" src="img/logo.png" style="max-width: 200px;">
     <nav>
       <ul class="nav masthead-nav">
