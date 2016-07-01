@@ -58,6 +58,9 @@ public class UserManagerDB implements IUserManager {
 			return connection;
 		}
 		
+		if(connection != null)
+			System.out.println("Connection Done! Let's work");
+		
 		return connection;
 	}
 
