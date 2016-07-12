@@ -100,6 +100,7 @@ public class UserServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 			}
 		} else {
+			System.out.println("Utilisateur introuvable");
 			request.setAttribute("errorMessage", "Utilisateur introuvable");
 			request.setAttribute("action", "login");
 			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);

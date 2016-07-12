@@ -1,15 +1,15 @@
-<% if(request.getParameter("errorMessage") != null) { %>
-	<div class="alert alert-danger" role="alert">
-		${ errorMessage }
+<div class="error">
+	<% if(request.getAttribute("errorMessage") != null) { %>
+		<div class="alert alert-danger" role="alert">
+			${errorMessage}
+		</div>
+	<% } else if(request.getAttribute("success") != null) { %>
+	<div class="alert alert-success" role="alert">
+		${success}
 	</div>
-<% } %>
-<% if(request.getParameter("success") != null) { %>
-<div class="alert alert-success" role="alert">
-	${ success }
+	<% } else if(request.getAttribute("infoMessage") != null) { %>
+	<div class="alert alert-info" role="alert">
+		${infoMessage}	
+	</div>
+	<% } %>
 </div>
-<% } %>
-<% if(request.getParameter("infoMessage") != null) { %>
-<div class="alert alert-info" role="alert">
-	${ infoMessage }	
-</div>
-<% } %>
