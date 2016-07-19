@@ -67,15 +67,16 @@
 			  <a href="ajoutPetitDej" type="button" class="btn btn-warning" >Ajouter un repas du jour</a>
 		  	
 		  		<jsp:directive.include file="stats.jsp" />
+
 		  	</div>
 		  </div>
 		</div>
     </div>
-
   </div>
 
-</div>
+  <jsp:directive.include file="btn-footer.jsp" />
 
+</div>
 
 </body>
 </html>

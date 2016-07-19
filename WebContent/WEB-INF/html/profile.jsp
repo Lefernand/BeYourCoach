@@ -17,31 +17,32 @@
 
 
 		<div class="inner cover">
-		  <h1 class="cover-heading">Connexion</h1>
+		  <h1 class="cover-heading">Mon compte&nbsp;<a href="profileEdition" class="btn btn-xs btn-info">Editer</a></h1>
+		  <h4 class="cover-heading">Voici les informations de votre compte</h4>
+				
 		  <div class="row">
 		  	<div class="col-sm-offset-3 col-sm-6">
 			  		<jsp:directive.include file="error.jsp" />
+
 			  		
-				<a href="profileEdition" class="btn btn-info"> Editer </a>
 				
 				<div>
-					<h2> login : <%= user.getLogin() %>  </h2>
-					<h2> email : <%= user.getEmail() %>  </h2>
-					<h2> password : <%= user.getPassword() %>  </h2>
+					<p>Login : <%= user.getLogin() %>  </p>
+					<p>Nom : <%= user.getNom() %>  </p>
+					<p>Prenom : <%= user.getPrenom() %>  </p>
+					<p>Email : <%= user.getEmail() %>  </p>
 				</div>
 				
-				<hr>
+			</div>
+		  	<div class="col-sm-offset-1 col-sm-4">
 				
 				<div>
-					<h2> nom : <%= user.getNom() %>  </h2>
-					<h2> prenom : <%= user.getPrenom() %>  </h2>
-					<h2> taille : <%= user.getTaille() %> cm  </h2>
-					<h2> Votre objectif poids est : <%= user.getObjectif_poids() %> kg </h2>
-					<h2> date de naissance : <%= user.getDate_naissance() %>  </h2>
-					<h2> inscrit le : <%= user.getDate_creation() %>  </h2>
+					<p>Ma taille : <%= user.getTaille() %> cm</p>
+					<p>Mon poids : A AJOUTER kg</p>
+					<p>Mon objectif poids: <%= user.getObjectif_poids() %> kg</p>
+					<p> date de naissance : <%= user.getDate_naissance() %></p>
+					<p> inscrit le : <%= user.getDate_creation() %></p>
 				</div>
-				
-				<hr>
 			  	
 		  	</div>
 		  </div>

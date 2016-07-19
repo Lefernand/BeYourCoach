@@ -35,6 +35,7 @@
 		  ${ errorMessage }
 		  <div class="row">
 		  	<div class="col-sm-offset-3 col-sm-6">
+		  		<jsp:directive.include file="error.jsp" />
 			  	<form method="get" action="${action}">
 				 <div class="form-group">
 				    <label for="login"></label>

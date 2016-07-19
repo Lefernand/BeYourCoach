@@ -23,5 +23,3 @@
     </nav>
   </div>
 </div>
-
-<jsp:directive.include file="error.jsp" />

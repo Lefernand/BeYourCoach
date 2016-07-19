@@ -136,6 +136,12 @@ body.login {
 /*
  * Footer
  */
+ 
+.btn-footer {
+	position: fixed;
+    bottom: 0;
+    left: 15px;
+}
 
 .mastfoot {
   color: #999; /* IE8 proofing */
