@@ -1,14 +1,14 @@
-<% if(request.getParameter("errorMessage") != null) { %>
+<% if(request.getAttribute("errorMessage") != null) { %>
 	<div class="alert alert-danger" role="alert">
-		${ errorMessage }
+		${ errorMessage }.
 	</div>
 <% } %>
-<% if(request.getParameter("success") != null) { %>
+<% if(request.getAttribute("success") != null) { %>
 <div class="alert alert-success" role="alert">
 	${ success }
 </div>
 <% } %>
-<% if(request.getParameter("infoMessage") != null) { %>
+<% if(request.getAttribute("infoMessage") != null) { %>
 <div class="alert alert-info" role="alert">
 	${ infoMessage }	
 </div>

@@ -6,8 +6,6 @@
 <jsp:directive.include file="header.jsp" />
 <body class="login">
 
-
-
 <div class="site-wrapper">
 
   <div class="site-wrapper-inner">
@@ -16,9 +14,25 @@
 
 		<jsp:directive.include file="navBar.jsp" />
 
+<% if(request.getParameter("errorMessage") != null) { %>
+	<div class="alert alert-danger" role="alert">
+		${ errorMessage }
+	</div>
+<% } %>
+<% if(request.getParameter("success") != null) { %>
+<div class="alert alert-success" role="alert">
+	${ success }
+</div>
+<% } %>
+<% if(request.getParameter("infoMessage") != null) { %>
+<div class="alert alert-info" role="alert">
+	${ infoMessage }	
+</div>
+<% } %>
 
 		<div class="inner cover">
 		  <h1 class="cover-heading">Connexion</h1>
+		  ${ errorMessage }
 		  <div class="row">
 		  	<div class="col-sm-offset-3 col-sm-6">
 			  	<form method="get" action="${action}">
@@ -33,6 +47,7 @@
 				  </div>
 				  
 				  <button type="submit" class="btn btn-default">Se connecter</button>
+				  <a href="registerPage" type="button" class="btn btn-info">Créer un compte</a>
 				</form>
 		  	</div>
 		  </div>

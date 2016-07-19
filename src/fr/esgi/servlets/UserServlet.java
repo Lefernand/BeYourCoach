@@ -3,12 +3,15 @@ package fr.esgi.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.esgi.model.IUserManager;
 import fr.esgi.model.User;
@@ -18,11 +21,12 @@ import fr.esgi.model.UserManagerDB;
  * Servlet implementation class UserServlet
  */
 @WebServlet(name = "user-servlet", description = "Servlet handling user login", urlPatterns = { "/login", "/create",
-		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/ajoutDej", "/ajoutDiner" })
+		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/UpdateRoleAdmin", "/UpdateRoleUser", "deleteUser"})
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Enregistrer user en session
-	private static final String USER_SESSION = "userSession";
+	static final String USER_SESSION = "userSession";
+	static final String INFO_SESSION = "infoDuJour";
 
 	// private IUserManager userManager = new UserManagerInMemory();
 
@@ -44,8 +48,6 @@ public class UserServlet extends HttpServlet {
 		final String uri = request.getRequestURI();
 		if (uri.contains("/login")) {
 			this.login(request, response);
-		} else if (uri.contains("/create")) {
-			this.create(request, response);
 		} else if (uri.contains("/list")) {
 			this.list(request, response);
 		} else if (uri.contains("/logout")) {
@@ -67,6 +69,12 @@ public class UserServlet extends HttpServlet {
 			this.ajoutDiner(request, response);
 		} else if (uri.contains("/home")) {
 			this.home(request, response);
+		} else if (uri.contains("/UpdateRoleUser")) {
+			this.updateRoleUser(request, response);
+		} else if (uri.contains("/UpdateRoleAdmin")) {
+			this.updateRoleAdmin(request, response);
+		} else if (uri.contains("/deleteUser")) {
+			this.deleteUser(request, response);
 		} else {
 			this.home(request, response);
 		}
@@ -85,11 +93,11 @@ public class UserServlet extends HttpServlet {
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		final String login = request.getParameter("user");
 		final String password = request.getParameter("password");
-
+		System.out.println(request.getParameterNames());
 		if (login == null || password == null) {
 			request.setAttribute("action", "login");
 			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
-		} else if (this.userManager.checkLogin(login)) {
+		} else if (this.userManager.checkLogin(login)) {			
 			if (this.userManager.checkLoginWithPassword(login, password)) {
 				request.getSession().setAttribute(UserServlet.USER_SESSION, this.userManager.getUser(login));
 				response.sendRedirect("home");
@@ -97,44 +105,14 @@ public class UserServlet extends HttpServlet {
 			} else {
 				request.setAttribute("errorMessage", "Password incorrect");
 				request.setAttribute("action", "login");
-				request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+				//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+				response.sendRedirect("login");
 			}
 		} else {
 			request.setAttribute("errorMessage", "Utilisateur introuvable");
 			request.setAttribute("action", "login");
-			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
-		}
-
-	}
-
-	private void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
-
-		if (user == null) {
+			//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
 			response.sendRedirect("login");
-			return;
-		} else {
-			System.out.println(user.getRole());
-			if (user.getRole().equals("admin")) {
-				final String login = request.getParameter("user");
-				final String password = request.getParameter("password");
-				final String role = request.getParameter("role");
-				final String email = request.getParameter("email");
-
-				if (login != null && password != null) {
-					if (this.userManager.checkLogin(login)) {
-						request.setAttribute("errorMessage", "User already exists. Please chose another");
-					} else {
-						this.userManager.createUser(login, password, role, email);
-						request.setAttribute("success", "User succesfully created");
-					}
-				}
-				request.setAttribute("action", "create");
-				request.getRequestDispatcher("/WEB-INF/html/userForm.jsp").forward(request, response);
-			} else {
-				request.setAttribute("errorMessage", "Vous n'êtes pas un Administrateur");
-				request.getRequestDispatcher("/WEB-INF/html/home.jsp").forward(request, response);
-			}
 		}
 
 	}
@@ -164,38 +142,73 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		request.getSession().removeAttribute(UserServlet.USER_SESSION);
+		try
+		{
+			HttpSession session=request.getSession(false);
+			if(session!=null)
+			{
+				Enumeration<String> attributeNames=session.getAttributeNames();
+				while(attributeNames.hasMoreElements()){
+					String sAttribute=attributeNames.nextElement().toString();
+					
+					System.out.println(request.getRequestURL()+" Removing Session Attribute : "+sAttribute);
+					session.removeAttribute(sAttribute);
+		
+				}
+			}
+		}catch(Exception e) { System.err.println(e);}
 		response.sendRedirect("login");
 	}
 
 	private void home(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
-		if (user == null) {
+		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);		
+		//String isPoids = this.userManager.isPoidsDuJour(user.getId());
+		//request.getSession().setAttribute("infoDuJour", isPoids);
+		
+		//System.out.println("isPoids : "+isPoids);
+		
+		if (user != null) {
+			if (this.userManager.isPoidsDuJour(user.getId()) != null) {
+				request.getSession().setAttribute("infoDuJour", this.userManager.isPoidsDuJour(user.getId()));
+				request.getSession().setAttribute("poidsDuJour", this.userManager.getPoidsDuJour(user.getId()).get(0));
+				request.getSession().setAttribute("IMCDuJour", this.userManager.getPoidsDuJour(user.getId()).get(1));
+				request.getSession().setAttribute("MGDuJour", this.userManager.getPoidsDuJour(user.getId()).get(2));
+				
+				System.out.println("-----SET POIDS------");
+				System.out.println("user : " + user.getId());
+				System.out.println("poids du jour" + request.getAttribute("poidsDuJour") + " kg");
+				System.out.println("IMC du jour :" + request.getAttribute("IMCDuJour"));
+				System.out.println("MG du jour :" + request.getAttribute("MGDuJour") + " %");
+				System.out.println("-----------");
+			} else {
+				System.out.println("-----SET POIDS------");
+				System.out.println("on affiche le modal aucun poids n'a été rentré");
+				System.out.println("-----------");
+			}
+
+			if (request.getParameter("typeAction") != null) {
+				
+				System.out.println("ajout Poids du jour détecté " + request.getParameter("poids"));
+				
+				this.userManager.setPoids(user.getId(), 
+						Integer.parseInt(request.getParameter("poids")), 
+						user.getTaille(),
+						java.sql.Date.valueOf(java.time.LocalDate.now()),
+						user.getSexe(),
+						user.getDate_naissance());
+				
+				request.getSession().setAttribute("infoDuJour", this.userManager.isPoidsDuJour(user.getId()));
+				request.getSession().setAttribute("poidsDuJour",  this.userManager.getPoidsDuJour(user.getId()).get(0));
+				request.getSession().setAttribute("IMCDuJour",  this.userManager.getPoidsDuJour(user.getId()).get(1));
+				request.getSession().setAttribute("MGDuJour",  this.userManager.getPoidsDuJour(user.getId()).get(2));
+			}
+
+			request.getRequestDispatcher("/WEB-INF/html/home.jsp").forward(request, response);
+		}else{
 			response.sendRedirect("login");
-			return;
 		}
-
-		Integer poids_journalier = this.userManager.getPoids(user.getId());
-
-		System.out.println("user : " + user.getId());
-		System.out.println("je set le poids du jour avec la valueur :" + poids_journalier);
-
-		if (poids_journalier == null) {
-			System.out.println("on affiche le modal");
-			request.setAttribute("booleanPoids", true);
-		} else {
-			System.out.println("on affiche pas le modal un poids a déja été rentré");
-			request.setAttribute("booleanPoids", false);
-			request.setAttribute("poidDuJour", poids_journalier);
-		}
-
-		if (request.getParameter("typeAction") != null) {
-			System.out.println("edit Poids détecté" + request.getParameter("poids"));
-			this.userManager.setPoids(user.getId(), Integer.parseInt(request.getParameter("poids")),
-					java.sql.Date.valueOf(java.time.LocalDate.now()));
-		}
-
-		request.getRequestDispatcher("/WEB-INF/html/home.jsp").forward(request, response);
+		
+		
 
 	}
 
@@ -237,12 +250,16 @@ public class UserServlet extends HttpServlet {
 					String prenom = request.getParameter("prenom");
 					Integer objectif_poids = Integer.parseInt(request.getParameter("objectif_poids"));
 					Integer taille = Integer.parseInt(request.getParameter("taille"));
-
+					
+					System.out.println(request.getParameter("sexe")+ " le sexe");
+					
+					Integer sexe = Integer.parseInt(request.getParameter("sexe"));
+					
 					SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
 					java.util.Date date = sdf1.parse(request.getParameter("date_naissance"));
 					java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
 
-					this.userManager.editProfile(nom, prenom, taille, objectif_poids, sqlStartDate, id);
+					this.userManager.editProfile(nom, prenom, taille, objectif_poids, sqlStartDate, id, sexe);
 					request.setAttribute("infoMessage", "Vos informations de profils ont été modifié");
 					request.getSession().setAttribute(UserServlet.USER_SESSION,
 							this.userManager.getUser(user.getLogin()));
@@ -310,5 +327,25 @@ public class UserServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/html/ajoutDiner.jsp").forward(request, response);
 		}
 
+	}
+	
+	private void updateRoleAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		final int id = Integer.parseInt(request.getParameter("id_user"));
+		
+		response.sendRedirect("list");
+	}
+	
+	private void updateRoleUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		final int id = Integer.parseInt(request.getParameter("id_user"));
+		
+		response.sendRedirect("list");
+	}
+
+	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		final int id = Integer.parseInt(request.getParameter("id_user"));
+		
+		this.userManager.deleteUser(id);
+		
+		response.sendRedirect("list");
 	}
 }

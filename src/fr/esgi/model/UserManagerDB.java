@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class UserManagerDB implements IUserManager {
@@ -95,9 +96,18 @@ public class UserManagerDB implements IUserManager {
 		PreparedStatement state = null;
 		int result = 0;
 		try {
-			String userSql = "INSERT INTO `esgi`.`users` (`id`, " + "`login`, " + "`email`, " + "`password`, "
-					+ "`role`, " + "`nom`, " + "`prenom`, " + "`int_taille`, " + "`date_naissance`, "
-					+ "`date_creation`) VALUES (NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, ?);";
+			String userSql = "INSERT INTO `esgi`.`users` (`id`, "
+					+ "`sexe`, "
+					+ "`login`, "
+					+ "`email`, "
+					+ "`password`, "
+					+ "`role`, "
+					+ "`nom`, "
+					+ "`prenom`, "
+					+ "`int_taille`, "
+					+ "`objectif_poids`, "
+					+ "`date_naissance`, "
+					+ "`date_creation`) VALUES (NULL, NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, ?);";
 
 			state = this.connection.prepareStatement(userSql);
 			state.setString(1, login);
@@ -106,7 +116,7 @@ public class UserManagerDB implements IUserManager {
 			state.setString(4, role);
 
 			state.setDate(5, java.sql.Date.valueOf(java.time.LocalDate.now()));
-
+						
 			result = state.executeUpdate();
 
 			state.close();
@@ -122,15 +132,15 @@ public class UserManagerDB implements IUserManager {
 	 * 
 	 */
 	@Override
-	public boolean DeleteUser(String login) {
+	public boolean deleteUser(Integer id) {
 
 		PreparedStatement state = null;
 		int resultat = 0;
 
 		try {
-			String deleteUserSQL = "DELETE FROM users WHERE login = ?";
+			String deleteUserSQL = "DELETE FROM users WHERE id = ?";
 			state = (PreparedStatement) this.connection.prepareStatement(deleteUserSQL);
-			state.setString(1, login);
+			state.setInt(1, id);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,9 +177,10 @@ public class UserManagerDB implements IUserManager {
 				Integer obj_poids = rs.getInt("objectif_poids");
 				Date date_naissance = rs.getDate("date_naissance");
 				Date date_creation = rs.getDate("date_creation");
+				Boolean sexe = rs.getBoolean("sexe");
 
 				user = new User(loginU, Password, role, email, id, nom, prenom, taille, obj_poids, date_naissance,
-						date_creation);
+						date_creation, sexe);
 
 				break;
 			}
@@ -206,8 +217,9 @@ public class UserManagerDB implements IUserManager {
 				String Password = rs.getString("password");
 				String role = rs.getString("role");
 				String email = rs.getString("email");
+				Boolean sexe = rs.getBoolean("sexe");
 
-				user = new User(loginU, Password, role, email, id);
+				user = new User(loginU, Password, role, email, id, sexe);
 
 				allUser.add(user);
 
@@ -229,21 +241,27 @@ public class UserManagerDB implements IUserManager {
 	 */
 	@Override
 	public boolean editProfile(String nom, String prenom, Integer taille, Integer objectif_poids, Date date_naissance,
-			Integer id) {
+			Integer id, Integer sexe) {
 		PreparedStatement stmt = null;
 		rs = null;
 		try {
-			String userSQL = "UPDATE `esgi`.`users` SET `nom` = ?, " + "`prenom` = ?, " + "`int_taille` = ?, "
-					+ "`objectif_poids` = ?, " + "`date_naissance` = ? " + "WHERE `users`.`id` = ?;";
+			String userSQL = "UPDATE `esgi`.`users` SET `sexe` = ?, "
+									+ "`nom` = ?, "
+									+ "`prenom` = ?, "
+									+ "`int_taille` = ?, "
+									+ "`objectif_poids` = ?, "
+									+ "`date_naissance` = ? WHERE `users`.`id` = ?;";
 
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
-			stmt.setString(1, nom);
-			stmt.setString(2, prenom);
-			stmt.setInt(3, taille);
-			stmt.setInt(4, objectif_poids);
-			stmt.setDate(5, date_naissance);
-			stmt.setInt(6, id);
+			stmt.setInt(1, sexe);
+			stmt.setString(2, nom);
+			stmt.setString(3, prenom);
+			stmt.setInt(4, taille);
+			stmt.setInt(5, objectif_poids);
+			stmt.setDate(6, date_naissance);
+			stmt.setInt(7, id);
+			
 
 			System.out.println("je passe la !");
 
@@ -252,6 +270,7 @@ public class UserManagerDB implements IUserManager {
 			System.out.println(prenom);
 			System.out.println(objectif_poids);
 			System.out.println(date_naissance);
+			System.out.println(sexe);
 
 			stmt.executeUpdate();
 
@@ -290,56 +309,128 @@ public class UserManagerDB implements IUserManager {
 	 * 
 	 */
 	@Override
-	public Integer getPoids(Integer id) {
+	public ArrayList<Float> getPoidsDuJour(Integer id) {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		ArrayList<Float> result = new ArrayList<>();
 		try {
-			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? AND date = ?;";
+			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? AND date = ? LIMIT 1;";
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
 			stmt.setInt(1, id);
 			stmt.setDate(2, java.sql.Date.valueOf(java.time.LocalDate.now()));
 
 			rs = stmt.executeQuery();
-			System.out.println("yoloooooo");
-			System.out.println("yoloooooo :  " + stmt);
 
-			Integer poids = null;
-
+			Float poids = null;
+			Float IMC = null;
+			Float MG = null;
+			
 			while (rs.next()) {
-				poids = rs.getInt("poids");
-			}
+					poids = rs.getFloat("poids");
+					IMC = rs.getFloat("IMC");
+					MG = rs.getFloat("MG");
+				}
+				
+			
+			result.add(poids);
+			result.add(IMC);
+			result.add(MG);
 
-			System.out.println("yoloooooo les poids est:  " + poids);
-			return poids;
-
-			// if (rs != null) {
-			// return rs.getInt("poids");
-			// }else{
-			// return null;
-			// }
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return result;
+	}
+	
+	/*
+	 * Fonction chack if le poids du jour existe
+	 * 
+	 */
+	@Override
+	public String isPoidsDuJour(Integer id) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? AND date = ? LIMIT 1;";
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
+			stmt.setInt(1, id);
+			stmt.setDate(2, java.sql.Date.valueOf(java.time.LocalDate.now()));
+
+			rs = stmt.executeQuery();
+			
+			if (!rs.next() ) {
+			    return "pasok";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "pasok";
+		}
+		return "ok";
 	}
 
 	/*
 	 * Fonction set le poids du jour pour un user
 	 * 
 	 */
-	public boolean setPoids(Integer id, Integer poids, Date dateDuJour) {
+	public boolean setPoids(Integer id, Integer poids, Integer taille, Date dateDuJour, Boolean sexe, Date date_naissance) {
 		PreparedStatement state = null;
 		int result = 0;
 		try {
-			String userSql = "INSERT INTO `esgi`.`suivi_poids` (`id`, " + "`id_user`, " + "`poids`, "
-					+ "`date`) VALUES (NULL, ?, ?, ?);";
+			//calcul IMC
+			
+			Float taile_use = (float) (taille*0.01);
+			
+			Float IMC = (float) (poids / (taile_use*taile_use));
+			//calcul Masse graisseuse
+			
+			GregorianCalendar birth = new GregorianCalendar();
+		    birth.setTime(date_naissance);
+
+		    GregorianCalendar now = new GregorianCalendar();
+
+		    Integer age = now.get(GregorianCalendar.YEAR) - birth.get(GregorianCalendar.YEAR);
+
+		    
+		    Integer sexe_use;
+		    if (sexe) {
+				sexe_use = 1;
+			}else{
+				sexe_use = 0;
+			}
+			
+			Float IMG = (float) ((1.20*IMC)+(0.23*age)-(10.8*sexe_use)-5.4);
+			
+			System.out.println("------PASS dans la fonction setPOIDS-----");
+			System.out.println(age + " ans");
+			System.out.println(poids + " kg");
+			System.out.println(taille + " cm");
+		    System.out.println("IMC = "+IMC);
+		    System.out.println("MG = "+IMG + " %");
+		    System.out.println("-----------");
+			
+			String userSql = "INSERT INTO `esgi`.`suivi_poids` (`id`, "
+															 + "`id_user`, "
+															 + "`poids`, "
+															 + "`IMC`, "
+															 + "`MG`, "
+															 + "`date`) VALUES (NULL, "
+																				+ "?,"
+																				+ "?, "
+																				+ "?, "
+																				+ "?, "
+																				+ "?);";
 
 			state = this.connection.prepareStatement(userSql);
 			state.setInt(1, id);
 			state.setInt(2, poids);
-			state.setDate(3, dateDuJour);
+			state.setFloat(3, IMC);
+			state.setFloat(4, IMG);
+			state.setDate(5, dateDuJour);
 
 			result = state.executeUpdate();
 

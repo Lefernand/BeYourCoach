@@ -4,9 +4,8 @@
 
 <html>
 <jsp:directive.include file="header.jsp" />
+
 <body class="login">
-
-
 
 <div class="site-wrapper">
 
@@ -21,6 +20,7 @@
 		  <h1 class="cover-heading">Connexion</h1>
 		  <div class="row">
 		  	<div class="col-sm-offset-3 col-sm-6">
+			  		<jsp:directive.include file="error.jsp" />
 			  		
 				<a href="profileEdition" class="btn btn-info"> Editer </a>
 				

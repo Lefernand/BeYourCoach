@@ -17,18 +17,45 @@
 				<!-- ${variable} = même chose que getAttribute en java mais permet d'éviter
 				d'avoir du java	 dans du HTML -->
 				<th>${title}</th>
+				<th>Rôle</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
+			
 		<%
 			List<User> users = (List<User>) request.getAttribute("userList");
 			for(User user1 : users)
-			{
-				out.print("<tr><td>");
-				out.print(user1.getLogin() + "<br/>");
-				out.print("</tr></td>");
-			}
+			{%>
+			  <tr>
+				<td>
+					<%=user1.getLogin() %>
+				</td>
+				<td>
+					<%if(user1.getRole().equals("admin")){ %>
+					  <form method="get" action="UpdateRoleAdmin">
+					    <input type="hidden" class="update-input-role" name="id_user" value="<%=user1.getId() %>">
+						<a type="submit" class="btn btn-success adminUser">Administrateur</a>
+					  </form>
+					<%}else{%>
+					  <form method="get" action="UpdateRoleUser">
+					  <input type="hidden" class="update-input-role" name="id_user" value="<%=user1.getId() %>">
+						<a type="submit" class="btn btn-default simpleUser">Simple Utilisateur</a>
+					  </form>
+					<%} %>
+				  
+				</td>
+				<td>
+				  <form method="get" action="deleteUser">
+					    <input type="hidden" class="delete-input-role" name="id_user" value="<%=user1.getId() %>">
+						<a type="submit" class="btn btn-sdanger deleteUser">Effacer</a>
+				  </form>
+				</td>
+			  </tr>
+			<% }
 		%>
+		</tr>
+		
 		</tbody>
 	</table>
 	</body>

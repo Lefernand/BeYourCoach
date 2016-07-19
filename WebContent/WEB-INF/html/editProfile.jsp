@@ -22,6 +22,7 @@
 		Integer obj_poids;
 		String email;
 		String password;
+		Boolean sexe;
 		
 
 		Integer id = user.getId();
@@ -64,7 +65,13 @@
 			password = "";
 		}else{
 			password = user.getPassword();
-		}		
+		}
+		
+		if(user.getSexe() == null){
+			sexe = true;
+		}else{
+			sexe = user.getSexe();
+		}
 		
 	%>
 		<div class="inner cover">
@@ -98,6 +105,11 @@
 					    <label for="date_naissance">Date de naissance</label>
 					    <input type="date" class="form-control" name="date_naissance" id="date_naissance" value="<%=date_naissance %>" >
 					 </div>
+					 <%= sexe %>
+					<select name="sexe">
+					  <option value="1" <% if(sexe.equals(true)){%>selected<% } %>>Homme</option> 
+					  <option value="0" <% if(sexe.equals(false)){%>selected<% } %>>Femme</option>
+					</select>
 					 
 					 <button type="submit" class="btn btn-success">Submit</button>
 				</form>

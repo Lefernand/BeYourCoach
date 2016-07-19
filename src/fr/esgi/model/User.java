@@ -15,6 +15,7 @@ public class User {
 	private String nom;
 	private Integer taille;
 	private Integer objectif_poids;
+	private Boolean sexe;
 	
 	private Date date_naissance;
 	private Date date_creation;
@@ -23,7 +24,7 @@ public class User {
 	}
 	
 	//contructeur createUser
-	public User(String login, String password, String role, String email, Integer id) {
+	public User(String login, String password, String role, String email, Integer id, Boolean sexe) {
 		this.id 		= id;
 		this.login 		= login;
 		this.password 	= password;
@@ -36,10 +37,12 @@ public class User {
 		this.date_naissance	= null;
 		this.date_creation 	= null;
 		this.objectif_poids	= null;
+		this.sexe 			= null;
+
 	}
 	
 	//contructeur getUser
-	public User(String login, String password, String role, String email, Integer id, String nom, String prenom, Integer taille, Integer obj_poids, Date date_naissance, Date date_creation){
+	public User(String login, String password, String role, String email, Integer id, String nom, String prenom, Integer taille, Integer obj_poids, Date date_naissance, Date date_creation, Boolean sexe){
 		this.id 		= id;
 		this.login 		= login;
 		this.password 	= password;
@@ -53,7 +56,8 @@ public class User {
 		this.date_creation 	= null;
 		this.objectif_poids	= obj_poids;
 		this.date_creation	= date_creation;
-	}
+		this.sexe			= sexe;
+	}		
 	
 
 	public String getLogin() {
@@ -147,5 +151,13 @@ public class User {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Boolean getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(Boolean sexe) {
+		this.sexe = sexe;
 	}
 }
