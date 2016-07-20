@@ -6,8 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -138,9 +136,12 @@ public class UserManagerDB implements IUserManager {
 		int resultat = 0;
 
 		try {
-			String deleteUserSQL = "DELETE FROM users WHERE id = ?";
+			String deleteUserSQL = "DELETE FROM `users` WHERE id = ?";
+									
 			state = (PreparedStatement) this.connection.prepareStatement(deleteUserSQL);
 			state.setInt(1, id);
+			
+			state.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -440,6 +441,100 @@ public class UserManagerDB implements IUserManager {
 			e.printStackTrace();
 		}
 		return result == 1;
+	}
+	
+	/*
+	 * Fonction set Role Admin
+	 * 
+	 */
+	@Override
+	public boolean setRoleAdmin(Integer id) {
+		PreparedStatement stmt = null;
+		try {
+			String userSQL = "UPDATE `esgi`.`users` SET `role` = ? WHERE `users`.`id` = ?;";
+							  
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+			stmt.setString(1, "admin");
+			stmt.setInt(2, id);
+
+			stmt.executeUpdate();
+
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	
+	/*
+	 * Fonction set Role User
+	 * 
+	 */
+	@Override
+	public boolean setRoleUser(Integer id) {
+		PreparedStatement stmt = null;
+		try {
+			System.out.println(id);
+			
+			String userSQL = "UPDATE `esgi`.`users` SET `role` = ? WHERE `users`.`id` = ?;";
+			System.out.println(userSQL);	  
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+			stmt.setString(1, "user");
+			stmt.setInt(2, id);
+
+			stmt.executeUpdate();
+
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	
+	/*
+	 * Fonction Get le poids du jour pour un user
+	 * 
+	 */
+	@Override
+	public ArrayList<PerfUser> getHistoriquePoids(Integer id) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<PerfUser> list_PerfUser = new ArrayList<PerfUser>();
+		try {
+			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? ORDER BY date";
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				PerfUser Puser = null;
+
+				Integer id_perf = rs.getInt("id");
+				Integer id_user = rs.getInt("id_user");
+				Float poids = rs.getFloat("poids");
+				Float iMC = rs.getFloat("IMC");
+				Float mG = rs.getFloat("MG");
+				Date date = rs.getDate("date");
+				
+				System.out.println(poids+ " " +iMC+ " " +date);
+
+				Puser = new PerfUser(id_perf, id_user, poids, iMC, mG, date);
+
+				list_PerfUser.add(Puser);
+
+			}
+			return list_PerfUser;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list_PerfUser;
 	}
 
 }

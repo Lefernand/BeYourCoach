@@ -3,7 +3,6 @@ package fr.esgi.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -21,7 +20,7 @@ import fr.esgi.model.UserManagerDB;
  * Servlet implementation class UserServlet
  */
 @WebServlet(name = "user-servlet", description = "Servlet handling user login", urlPatterns = { "/login", "/create",
-		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/UpdateRoleAdmin", "/UpdateRoleUser", "deleteUser"})
+		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/updateRoleAdmin", "/updateRoleUser", "/deleteUser"})
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Enregistrer user en session
@@ -69,9 +68,9 @@ public class UserServlet extends HttpServlet {
 			this.ajoutDiner(request, response);
 		} else if (uri.contains("/home")) {
 			this.home(request, response);
-		} else if (uri.contains("/UpdateRoleUser")) {
+		} else if (uri.contains("/updateRoleUser")) {
 			this.updateRoleUser(request, response);
-		} else if (uri.contains("/UpdateRoleAdmin")) {
+		} else if (uri.contains("/updateRoleAdmin")) {
 			this.updateRoleAdmin(request, response);
 		} else if (uri.contains("/deleteUser")) {
 			this.deleteUser(request, response);
@@ -332,13 +331,15 @@ public class UserServlet extends HttpServlet {
 	
 	private void updateRoleAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		final int id = Integer.parseInt(request.getParameter("id_user"));
-		
+		System.out.println("update role admin " + id);
+		this.userManager.setRoleAdmin(id);
 		response.sendRedirect("list");
 	}
 	
 	private void updateRoleUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		final int id = Integer.parseInt(request.getParameter("id_user"));
-		
+		System.out.println("update role user " + id);
+		this.userManager.setRoleUser(id);
 		response.sendRedirect("list");
 	}
 

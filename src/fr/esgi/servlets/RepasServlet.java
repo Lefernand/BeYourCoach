@@ -2,10 +2,7 @@ package fr.esgi.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.esgi.model.Aliment;
-import fr.esgi.model.IUserManager;
 import fr.esgi.model.User;
-import fr.esgi.model.UserManagerDB;
 import fr.esgi.model.alimentManagerDB;
 
 /**
@@ -27,7 +22,6 @@ import fr.esgi.model.alimentManagerDB;
 public class RepasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private IUserManager userManager = new UserManagerDB();
 	private alimentManagerDB repasManager = new alimentManagerDB();
        
     /**
@@ -35,14 +29,12 @@ public class RepasServlet extends HttpServlet {
      */
     public RepasServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		final String uri = request.getRequestURI();
 		
 		if (uri.contains("/ajoutRepas")) {
@@ -57,7 +49,6 @@ public class RepasServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
@@ -77,8 +68,8 @@ public class RepasServlet extends HttpServlet {
 			Integer count = 1;
 			
 			System.out.println("il y a " + nb_aliment +" aliemnts dans ce repas");
-			System.out.println((String) parameters.get("nom-1")[0]);
-			System.out.println((String) parameters.get("nom-2")[0]);
+			//System.out.println((String) parameters.get("nom-1")[0]);
+			//System.out.println((String) parameters.get("nom-2")[0]);
 			
 			for (int i = 0; i < nb_aliment; i++) {
 				Aliment aliment = new Aliment((String) parameters.get("nom-"+count)[0], 

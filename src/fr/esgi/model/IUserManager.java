@@ -17,5 +17,8 @@ public interface IUserManager {
 	boolean editProfile(String nom, String prenom, Integer taille, Integer objectif_poids, Date date_naissance,
 			Integer id, Integer sexe);
 	String isPoidsDuJour(Integer id);
+	boolean setRoleAdmin(Integer id);
+	boolean setRoleUser(Integer id);
+	List<PerfUser> getHistoriquePoids(Integer id);
 	
 }

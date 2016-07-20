@@ -33,14 +33,14 @@
 				</td>
 				<td>
 					<%if(user1.getRole().equals("admin")){ %>
-					  <form method="get" action="UpdateRoleAdmin">
+					  <form method="get" action="updateRoleUser">
 					    <input type="hidden" class="update-input-role" name="id_user" value="<%=user1.getId() %>">
-						<a type="submit" class="btn btn-success adminUser">Administrateur</a>
+						<button type="submit" class="btn btn-success adminUser">Administrateur</button>
 					  </form>
 					<%}else{%>
-					  <form method="get" action="UpdateRoleUser">
+					  <form method="get" action="updateRoleAdmin">
 					  <input type="hidden" class="update-input-role" name="id_user" value="<%=user1.getId() %>">
-						<a type="submit" class="btn btn-default simpleUser">Simple Utilisateur</a>
+						<button type="submit" class="btn btn-default simpleUser">Simple Utilisateur</button>
 					  </form>
 					<%} %>
 				  
@@ -48,13 +48,12 @@
 				<td>
 				  <form method="get" action="deleteUser">
 					    <input type="hidden" class="delete-input-role" name="id_user" value="<%=user1.getId() %>">
-						<a type="submit" class="btn btn-sdanger deleteUser">Effacer</a>
+						<button type="submit" class="btn btn-danger deleteUser">Effacer</button>
 				  </form>
 				</td>
 			  </tr>
 			<% }
 		%>
-		</tr>
 		
 		</tbody>
 	</table>

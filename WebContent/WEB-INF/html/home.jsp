@@ -22,7 +22,6 @@
 			</div>
 		
 		  <h1 class="cover-heading">Mes statistiques</h1>
-		  <%= request.getSession().getAttribute("infoDuJour") %>
 		  <div class="row">
 		  	<div class="col-sm-offset-0 col-sm-12">
 		  	
@@ -59,7 +58,7 @@
         			<%}else{%>
         				<p>Votre poids du jour est de : <%= request.getSession().getAttribute("poidsDuJour") %> kg</p>
         				<p>Votre IMC du jour est de  : <%= request.getSession().getAttribute("IMCDuJour") %></p>
-        				<p>Votre Masse graisseuse du jour est de : <%= request.getSession().getAttribute("MGDuJour") %> kg</p>
+        				<p>Votre Masse graisseuse du jour est de : <%= request.getSession().getAttribute("MGDuJour") %> %</p>
         			<%}%>
 
 			    </div>
@@ -74,7 +73,6 @@
     </div>
   </div>
 
-  <jsp:directive.include file="btn-footer.jsp" />
 
 </div>
 
