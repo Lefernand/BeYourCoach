@@ -275,7 +275,6 @@ public class UserServlet extends HttpServlet {
 					request.setAttribute("infoMessage", "Vos informations de compte ont été modifié");
 					request.getSession().setAttribute(UserServlet.USER_SESSION,
 							this.userManager.getUser(user.getLogin()));
-
 					request.setAttribute("user", user);
 					request.setAttribute("action", "profileEdition");
 					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
