@@ -514,7 +514,7 @@ public class UserManagerDB implements IUserManager {
 		ResultSet rs = null;
 		ArrayList<PerfUser> list_PerfUser = new ArrayList<PerfUser>();
 		try {
-			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? ORDER BY date";
+			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? ORDER BY date DESC";
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
 			stmt.setInt(1, id);

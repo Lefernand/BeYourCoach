@@ -27,19 +27,28 @@
 			</tr>
 		</thead>
 		<tbody>
-		${myPoidsList.get(1).getDate()}
-			totoooo
-			<% for(int i = 0; i < $myPoidsList.size(); i+=1) { %>
-	            toto
-	            <tr>      
-	                <td>${myPoidsList.get(i).getId()}</td>
-	                <td>${myPoidsList.get(i).getpoids()}</td>
-	                <td>${myPoidsList.get(i).getIMC()}</td>
-	                <td>${myPoidsList.get(i).getMG()}</td>
-	                <td>${myPoidsList.get(i).getDate()}</td>  
+		<% ArrayList<PerfUser> listPerf = (ArrayList<PerfUser>) request.getAttribute("myPoidsList");
+			for(int i = 0; i < listPerf.size(); i+=1) { %>
+	            <tr>
+	                <td><%=listPerf.get(i).getPoids()%> Kg </td>
+	                <td><%=listPerf.get(i).getIMC()%></td>
+	                <td><%=listPerf.get(i).getMG()%> %</td>
+	                <td><%=listPerf.get(i).getDate()%></td>
+	                <td>
+					  <form method="get" action="updatePoids">
+					    <input type="hidden" class="update-input-role" name="id_user" value="<%=user.getId() %>">
+					    <input type="hidden" class="update-input-role" name="poids" value="<%=user.getId() %>">
+						<button type="submit" class="btn btn-success adminUser">Administrateur</button>
+					  </form>
+					</td>
+					<td>
+					  <form method="get" action="deletePoids">
+						    <input type="hidden" class="delete-input-role" name="id_user" value="<%=listPerf.get(i).getId()%>">
+							<button type="submit" class="btn btn-danger deleteUser">Effacer</button>
+					  </form>
+					</td>
 	            </tr>
         	<% } %>
-			
 		
 		</tbody>
 	</table>
