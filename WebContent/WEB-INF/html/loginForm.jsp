@@ -32,7 +32,6 @@
 
 		<div class="inner cover">
 		  <h1 class="cover-heading">Connexion</h1>
-		  ${ errorMessage }
 		  <div class="row">
 		  	<div class="col-sm-offset-3 col-sm-6">
 		  		<jsp:directive.include file="error.jsp" />

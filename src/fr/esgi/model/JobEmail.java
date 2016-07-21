@@ -14,48 +14,43 @@ public class JobEmail implements Job {
     @Override
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
-    	
-    	// Recipient's email ID needs to be mentioned.
-        String to = "alexandre.lau@beyourcoach.com";
 
-        // Sender's email ID needs to be mentioned
-        String from = "admin@beyourcoach.com";
-
-        // Assuming you are sending email from localhost
-        String host = "smtp.beyourcoach.com";
-
-        // Get system properties
-        Properties properties = System.getProperties();
-
-        // Setup mail server
-        properties.setProperty("mail.smtp.host", host);
-
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
-
-        try{
-           // Create a default MimeMessage object.
-           MimeMessage message = new MimeMessage(session);
-
-           // Set From: header field of the header.
-           message.setFrom(new InternetAddress(from));
-
-           // Set To: header field of the header.
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-           // Set Subject: header field
-           message.setSubject("BeYourCoach Alerte");
-
-           // Now set the actual message
-           message.setText("Alerte! n'oubliez pas de venir mettre a jour vos informations sur la plate-forme BeYourCoach.");
-
-           // Send message
-           Transport.send(message);
-           System.out.println("Sent message successfully....");
-        }catch (MessagingException mex) {
-           mex.printStackTrace();
-        }
         System.out.println("Executing Job");
+    	
+
+		final String username = "lauctonflow@gmail.com";
+		final String password = "Fucklapolice95";
+    	
+    	Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("from-email@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse("juliien.decoen@gmail.com"));
+			message.setSubject("BeYourCoach Alerte");
+			message.setText("Alerte! n'oubliez pas de venir mettre a jour vos informations sur la plate-forme BeYourCoach.");
+
+			Transport.send(message);
+			
+	        System.out.println("Alert sent successfully....");
+
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 
     }
 

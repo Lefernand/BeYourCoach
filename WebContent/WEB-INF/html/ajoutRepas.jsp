@@ -18,12 +18,7 @@
 		  	<div class="col-sm-offset-1 col-sm-10">
 				<form method="get" action="ajoutRepas" id="form-ajoutMeal" >
 				<div class="form-inline">
-				    <label for="search">Recherche</label>
-					<input list="aliments" type="text" class="form-control" id="recherche" placeholder="Recherche">
-					<button id="recherche-btn" type="button" class="btn btn-success">Rechercher</button>
-					
 					<button type="submit" class="btn btn-info pull-right">Enregistrer le repas</button>
-					
 					<select name="time" id="time" class="form-control pull-right" style="margin-right:10px !important;">
 					  <option value="PDJ">Petit Déjeuner</option> 
 					  <option value="DEJ">Déjeuner</option>
@@ -45,6 +40,12 @@
 						 </tbody>
 					</table>
 				</form>
+				<hr>
+				<div class="form-inline">
+				    <label for="search">Ajouter un aliment</label>
+					<input list="aliments" type="text" class="form-control" id="recherche" placeholder="Recherche">
+					<button id="recherche-btn" type="button" class="btn btn-success">Rechercher</button>
+				</div>
 				<div id="choix">
 				</div>
 		  	</div>

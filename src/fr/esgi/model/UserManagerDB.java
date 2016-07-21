@@ -163,6 +163,7 @@ public class UserManagerDB implements IUserManager {
 			String userSQL = "SELECT * FROM users WHERE login = ?";
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 			stmt.setString(1, login);
+			
 
 			rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -183,6 +184,7 @@ public class UserManagerDB implements IUserManager {
 				user = new User(loginU, Password, role, email, id, nom, prenom, taille, obj_poids, date_naissance,
 						date_creation, sexe);
 
+				System.out.println(email);
 				break;
 			}
 

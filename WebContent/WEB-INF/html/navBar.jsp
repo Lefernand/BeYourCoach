@@ -9,17 +9,16 @@
         <%if(request.getSession().getAttribute("userSession") == null) {%>
         	<li class="active"><a href="login">Login</a></li>
         <%}%>
-        <% if(request.getSession().getAttribute("userSession") != null && user.getRole() != "admin") {%>
-        	<li><a href="list">Liste des utilisateurs</a></li>
-       	<%}%>
         <% if(request.getSession().getAttribute("userSession") != null) {%>
-      		<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      		<li><a href="${pageContext.request.contextPath}/home">Journal de bord</a></li>
       		<li><a href="historiquePoids">Historique poids</a></li>
-      		<li><a href="profile">Profile</a></li>
-      		<li><a href="logout">Logout</a></li>
+      		<li><a href="profile">Mon profil</a></li>
+	        <% if(user.getRole() != "admin") {%>
+	        	<li><a href="list">Admin</a></li>
+	       	<%}%>
+      		<li><a href="logout">Déconnexion</a></li>
      	<%}%>
      	
-        
       </ul>
     </nav>
   </div>

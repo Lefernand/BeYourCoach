@@ -17,7 +17,7 @@ import fr.esgi.model.alimentManagerDB;
 /**
  * Servlet implementation class RepasServlet
  */
-@WebServlet(name = "repas-servlet", description = "Servlet register user", urlPatterns = { "/ajoutRepas", "/deleteRepas"})
+@WebServlet(name = "repas-servlet", description = "Servlet register user", urlPatterns = { "/addRepas", "/deleteRepas"})
 
 public class RepasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +37,7 @@ public class RepasServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String uri = request.getRequestURI();
 		
-		if (uri.contains("/ajoutRepas")) {
+		if (uri.contains("/addRepas")) {
 			this.ajoutRepas(request, response);
 		}
 		if (uri.contains("/deleteRepas")) {

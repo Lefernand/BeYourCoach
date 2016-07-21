@@ -20,7 +20,7 @@ import fr.esgi.model.UserManagerDB;
  * Servlet implementation class UserServlet
  */
 @WebServlet(name = "user-servlet", description = "Servlet handling user login", urlPatterns = { "/login", "/create",
-		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutPetitDej", "/updateRoleAdmin", "/updateRoleUser", "/deleteUser"})
+		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutRepas", "/updateRoleAdmin", "/updateRoleUser", "/deleteUser"})
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Enregistrer user en session
@@ -52,20 +52,18 @@ public class UserServlet extends HttpServlet {
 		} else if (uri.contains("/logout")) {
 			this.logout(request, response);
 		} else if (uri.contains("/profileEdition")) {
-			try {
-				this.editProfile(request, response);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				try {
+					this.editProfile(request, response);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		} else if (uri.contains("/profile")) {
 			this.profile(request, response);
-		} else if (uri.contains("/ajoutPetitDej")) {
-			this.ajoutPetitDej(request, response);
-		} else if (uri.contains("/ajoutDej")) {
-			this.ajoutDej(request, response);
-		} else if (uri.contains("/ajoutDiner")) {
-			this.ajoutDiner(request, response);
+		} else if (uri.contains("/ajoutRepas")) {
+			this.ajoutRepas(request, response);
+		} else if (uri.contains("/setRepas")) {
+			this.ajoutRepas(request, response);
 		} else if (uri.contains("/home")) {
 			this.home(request, response);
 		} else if (uri.contains("/updateRoleUser")) {
@@ -108,11 +106,11 @@ public class UserServlet extends HttpServlet {
 				response.sendRedirect("login");
 			}
 		} else {
-			System.out.println("Utilisateur introuvable");
+			//System.out.println("Utilisateur introuvable");
 			request.setAttribute("errorMessage", "Utilisateur introuvable");
 			request.setAttribute("action", "login");
-			//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
-			response.sendRedirect("login");
+			request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+			//response.sendRedirect("login");
 		}
 
 	}
@@ -290,7 +288,7 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
-	private void ajoutPetitDej(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
+	private void ajoutRepas(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
 		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
 		if (user == null) {
 			response.sendRedirect("login");
@@ -298,33 +296,7 @@ public class UserServlet extends HttpServlet {
 		} else {
 			request.setAttribute("user", user);
 			request.setAttribute("action", "profil");
-			request.getRequestDispatcher("/WEB-INF/html/ajoutPetitDej.jsp").forward(request, response);
-		}
-
-	}
-	
-	private void ajoutDej(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
-		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
-		if (user == null) {
-			response.sendRedirect("login");
-			return;
-		} else {
-			request.setAttribute("user", user);
-			request.setAttribute("action", "profil");
-			request.getRequestDispatcher("/WEB-INF/html/ajoutDej.jsp").forward(request, response);
-		}
-
-	}
-	
-	private void ajoutDiner(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException{
-		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
-		if (user == null) {
-			response.sendRedirect("login");
-			return;
-		} else {
-			request.setAttribute("user", user);
-			request.setAttribute("action", "profil");
-			request.getRequestDispatcher("/WEB-INF/html/ajoutDiner.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/ajoutRepas.jsp").forward(request, response);
 		}
 
 	}
