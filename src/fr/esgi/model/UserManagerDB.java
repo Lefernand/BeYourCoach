@@ -250,27 +250,34 @@ public class UserManagerDB implements IUserManager {
 	 * 
 	 */
 	@Override
-	public boolean editProfile(String nom, String prenom, Integer taille, Integer objectif_poids, Date date_naissance,
-			Integer id, Integer sexe) {
+	public boolean editProfile(Integer id, String login, String nom, String prenom, Integer taille,
+			Integer objectif_poids, String date_naissance, Boolean sexe, String email, String password) {
 		PreparedStatement stmt = null;
 		rs = null;
 		try {
-			String userSQL = "UPDATE `esgi`.`users` SET `sexe` = ?, "
-									+ "`nom` = ?, "
-									+ "`prenom` = ?, "
-									+ "`int_taille` = ?, "
-									+ "`objectif_poids` = ?, "
-									+ "`date_naissance` = ? WHERE `users`.`id` = ?;";
+			String userSQL = "UPDATE `esgi`.`users` SET "
+					+ "`login` = ?, "
+					+ "`nom` = ?, "
+					+ "`prenom` = ?, "
+					+ "`int_taille` = ?, "
+					+ "`objectif_poids` = ?, "
+					+ "`date_naissance` = ?, "
+					+ "`sexe` = ?, "
+					+ "`email` = ?, "
+					+ "`password` = ? WHERE `users`.`id` = ?;";
 
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
-			stmt.setInt(1, sexe);
+			stmt.setString(1, login);
 			stmt.setString(2, nom);
 			stmt.setString(3, prenom);
 			stmt.setInt(4, taille);
 			stmt.setInt(5, objectif_poids);
-			stmt.setDate(6, date_naissance);
-			stmt.setInt(7, id);
+			stmt.setDate(6, java.sql.Date.valueOf(date_naissance));
+			stmt.setBoolean(7, sexe);
+			stmt.setString(8, email);
+			stmt.setString(9, password);
+			stmt.setInt(10, id);
 			
 
 			System.out.println("je passe la !");

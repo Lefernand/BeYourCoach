@@ -226,37 +226,64 @@ public class UserServlet extends HttpServlet {
 
 	private void editProfile(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ParseException {
+		
 		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
+		
 
-		if (request.getParameter("typeAction") == null) {
-			if (user == null) {
-				response.sendRedirect("login");
-				return;
+		System.out.println(request.getParameter("login"));
+		
+		if (user == null) {
+			response.sendRedirect("login");
+			return;
+		}else if (request.getParameter("login") != null) {
+			
+
+			request.setAttribute("user", user);
+			request.setAttribute("action", "profileEdition");
+
+			final String login = request.getParameter("login");
+			final String nom = request.getParameter("nom");
+			final String prenom = request.getParameter("prenom");
+			final Integer taille = Integer.parseInt(request.getParameter("taille"));
+			final Integer objectif_poids = Integer.parseInt(request.getParameter("objectif_poids"));
+			final String date_naissance = request.getParameter("date_naissance");
+			final Boolean sexe = Boolean.parseBoolean(request.getParameter("sexe"));
+			final String email = request.getParameter("email");
+			final String password = request.getParameter("password");
+			final String password2 = request.getParameter("password2");
+			
+	
+			if (nom != null && prenom != null && taille != 0 && objectif_poids != 0 && date_naissance != null &&  email != null && password != null && password2 != null) {
+	
+					if(password.equals(password2)){
+						if (this.userManager.editProfile(user.getId(), login, nom, prenom, taille, objectif_poids, date_naissance, sexe, email, password)) {
+							request.setAttribute("success", "Modification réussie");
+							request.getSession().setAttribute(UserServlet.USER_SESSION,
+									this.userManager.getUser(user.getLogin()));
+							request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
+						} else {
+							request.setAttribute("errorMessage", "Erreur lors de l'inscription");
+							request.setAttribute("action", "profileEdition");
+							request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
+						}
+					} else {
+						request.setAttribute("errorMessage", "Password différent"+ password + password2);
+						request.setAttribute("action", "profileEdition");
+						request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
+					}
 			} else {
-				request.setAttribute("user", user);
-				request.setAttribute("action", "profileEdition");
+	
+				request.setAttribute("errorMessage", "Merci de remplir tous les champs");
 				request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
 			}
 		} else {
-			if (user == null) {
-				response.sendRedirect("login");
-				return;
-			} else {
-				if (request.getParameter("typeAction").equals("profile")) {
-					Integer id = Integer.parseInt(request.getParameter("id"));
-					String nom = request.getParameter("nom");
-					String prenom = request.getParameter("prenom");
-					Integer objectif_poids = Integer.parseInt(request.getParameter("objectif_poids"));
-					Integer taille = Integer.parseInt(request.getParameter("taille"));
-					
-					System.out.println(request.getParameter("sexe")+ " le sexe");
-					
-					Integer sexe = Integer.parseInt(request.getParameter("sexe"));
-					
-					SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
-					java.util.Date date = sdf1.parse(request.getParameter("date_naissance"));
-					java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
 
+<<<<<<< HEAD
+			request.setAttribute("user", user);
+			request.setAttribute("action", "profileEdition");
+
+			request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
+=======
 					this.userManager.editProfile(nom, prenom, taille, objectif_poids, sqlStartDate, id, sexe);
 					request.setAttribute("infoMessage", "Vos informations de profils ont été modifié");
 					request.getSession().setAttribute(UserServlet.USER_SESSION,
@@ -284,6 +311,7 @@ public class UserServlet extends HttpServlet {
 					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
 				}
 			}
+>>>>>>> 32fdae98eded4ef6f396fa9e9d721aa95ea02b97
 		}
 	}
 	
