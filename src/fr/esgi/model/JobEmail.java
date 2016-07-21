@@ -14,6 +14,8 @@ public class JobEmail implements Job {
     @Override
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
+    	
+    	
 
         System.out.println("Executing Job");
     	

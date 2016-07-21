@@ -26,7 +26,7 @@
 		  		<% if(request.getSession().getAttribute("infoDuJour").equals("pasok")) { %>
         		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#poids_du_jour">Poids du jour</button>
 		  		<% } else { %>
-		  		<button type="button" class="btn btn-success btn-lg disabled" data-toggle="modal" data-target="#poids_du_jour">Poids du jour <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+		  		<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#poids_du_jour">Poids du jour <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 		  		<%}%>
 			  	<a href="ajoutRepas" type="button" class="btn btn-warning" >Ajouter un repas du jour</a>
 		  	

@@ -126,10 +126,15 @@
 					
 					 <div class="form-group">
 					    <label for="password">Password</label>
-					    <input type="text" class="form-control" name="password" id="password" value="<%=password%>">
+					    <input type="password" class="form-control" name="password" id="password" value="<%=password%>">
+					 </div>
+					
+					 <div class="form-group">
+					    <label for="password">Confirmer password</label>
+					    <input type="password" class="form-control" name="password2" id="password2">
 					 </div>
 					  
-					 <button type="submit" class="btn btn-success">Submit</button>
+					 <button type="submit" class="btn btn-success">S'inscrire</button>
 				</form>
 		  	</div>
 		  </div>

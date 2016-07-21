@@ -14,7 +14,7 @@
       		<li><a href="historiquePoids">Historique poids</a></li>
       		<li><a href="profile">Mon profil</a></li>
 	        <% if(user.getRole() != "admin") {%>
-	        	<li><a href="list">Admin</a></li>
+	        	<li><a href="admin">Admin</a></li>
 	       	<%}%>
       		<li><a href="logout">Déconnexion</a></li>
      	<%}%>

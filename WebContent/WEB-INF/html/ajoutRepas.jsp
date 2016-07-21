@@ -18,12 +18,10 @@
 		  	<div class="col-sm-offset-1 col-sm-10">
 				<form method="get" action="ajoutRepas" id="form-ajoutMeal" >
 				<div class="form-inline">
-					<button type="submit" class="btn btn-info pull-right">Enregistrer le repas</button>
-					<select name="time" id="time" class="form-control pull-right" style="margin-right:10px !important;">
-					  <option value="PDJ">Petit Déjeuner</option> 
-					  <option value="DEJ">Déjeuner</option>
-					  <option value="DIN">Dinner</option>
-					</select>
+					<input type="radio" name="time" value="PDJ" style="margin: 0 5px;"> Petit Déjeuner 
+					<input type="radio" name="time" value="DEJ" style="margin: 0 5px;"> Déjeuner
+					<input type="radio" name="time" value="DIN" style="margin: 0 5px;"> Dinner
+					<button type="submit" class="btn btn-info" style="margin: 0 10px;">Enregistrer le repas</button>
 				</div>
 					 <table class="table">
 						 <thead>
@@ -37,6 +35,7 @@
 						 </thead>
 						 
 						 <tbody id="tbody-form">
+						 	<tr class="vide"><td colspan="5" class="text-center">Aucun aliments ajouté</td></tr>
 						 </tbody>
 					</table>
 				</form>
@@ -145,6 +144,9 @@
 		        console.log("img : "+ img );
 		        console.log("energie : "+ energie);
 		        
+		        if($(".vide"))
+		        	$(".vide").remove();
+		        
 			  	nouveauTrTbody = document.createElement("tr");
 			  	
 			  	//image
@@ -217,6 +219,7 @@
 	    });
 	        
 	        $(document).on("click", ".btn-effacer-aliment", function(e) {
+	        	count--;
 	        	$(this)[0].parentNode.parentNode.remove();
 	        	$(this)[0].parentNode.parentNode.firstChild;
 	        	
@@ -243,6 +246,12 @@
             	$("#choix").prepend(div);
             	div.appendChild(image);
             	div.appendChild(titre);
+            	
+
+		        if(count == 0)
+		        	$("#tbody-form").html('<tr class="vide"><td colspan="5" class="text-center">Aucun aliments ajouté</td></tr>');
+            	
+            	
 	        	
 	        });
 

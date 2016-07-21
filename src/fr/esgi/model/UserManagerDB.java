@@ -90,7 +90,7 @@ public class UserManagerDB implements IUserManager {
 	 * 
 	 */
 	@Override
-	public boolean createUser(String login, String password, String role, String email) {
+	public boolean createUser(String login, String nom, String prenom, Integer taille, Integer objectif_poids, String date_naissance, Boolean sexe, String email, String password) {
 		PreparedStatement state = null;
 		int result = 0;
 		try {
@@ -105,15 +105,22 @@ public class UserManagerDB implements IUserManager {
 					+ "`int_taille`, "
 					+ "`objectif_poids`, "
 					+ "`date_naissance`, "
-					+ "`date_creation`) VALUES (NULL, NULL, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, ?);";
+					+ "`date_creation`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			state = this.connection.prepareStatement(userSql);
-			state.setString(1, login);
-			state.setString(2, email);
-			state.setString(3, password);
-			state.setString(4, role);
+			
+			state.setBoolean(1, sexe);
+			state.setString(2, login);
+			state.setString(3, email);
+			state.setString(4, password);
+			state.setString(5, "user");
+			state.setString(6, nom);
+			state.setString(7, prenom);
+			state.setInt(8, taille);
+			state.setInt(9, objectif_poids);
+			state.setDate(10, java.sql.Date.valueOf(date_naissance));
 
-			state.setDate(5, java.sql.Date.valueOf(java.time.LocalDate.now()));
+			state.setDate(11, java.sql.Date.valueOf(java.time.LocalDate.now()));
 						
 			result = state.executeUpdate();
 

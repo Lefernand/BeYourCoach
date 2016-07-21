@@ -7,7 +7,6 @@ import java.util.List;
 public interface IUserManager {
 	public boolean checkLogin(String login);
 	public boolean checkLoginWithPassword(String login, String password);
-	boolean createUser(String login, String password, String role, String email);
 	public boolean deleteUser(Integer id);
 	public User getUser(String login);
 	public List<User> allUsers();
@@ -20,5 +19,7 @@ public interface IUserManager {
 	boolean setRoleAdmin(Integer id);
 	boolean setRoleUser(Integer id);
 	List<PerfUser> getHistoriquePoids(Integer id);
+	boolean createUser(String login, String nom, String prenom, Integer taille, Integer objectif_poids,
+			String date_naissance, Boolean sexe, String email, String password);
 	
 }

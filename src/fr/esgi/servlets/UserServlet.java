@@ -20,7 +20,7 @@ import fr.esgi.model.UserManagerDB;
  * Servlet implementation class UserServlet
  */
 @WebServlet(name = "user-servlet", description = "Servlet handling user login", urlPatterns = { "/login", "/create",
-		"/list", "/home", "/logout", "/profile", "/profileEdition", "/ajoutRepas", "/updateRoleAdmin", "/updateRoleUser", "/deleteUser"})
+		"/admin", "/home", "/logout", "/profile", "/profileEdition", "/ajoutRepas", "/updateRoleAdmin", "/updateRoleUser", "/deleteUser"})
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Enregistrer user en session
@@ -47,8 +47,8 @@ public class UserServlet extends HttpServlet {
 		final String uri = request.getRequestURI();
 		if (uri.contains("/login")) {
 			this.login(request, response);
-		} else if (uri.contains("/list")) {
-			this.list(request, response);
+		} else if (uri.contains("/admin")) {
+			this.admin(request, response);
 		} else if (uri.contains("/logout")) {
 			this.logout(request, response);
 		} else if (uri.contains("/profileEdition")) {
@@ -102,8 +102,8 @@ public class UserServlet extends HttpServlet {
 			} else {
 				request.setAttribute("errorMessage", "Password incorrect");
 				request.setAttribute("action", "login");
-				//request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
-				response.sendRedirect("login");
+				request.getRequestDispatcher("/WEB-INF/html/loginForm.jsp").forward(request, response);
+				//response.sendRedirect("login");
 			}
 		} else {
 			//System.out.println("Utilisateur introuvable");
@@ -115,7 +115,7 @@ public class UserServlet extends HttpServlet {
 
 	}
 
-	private void list(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void admin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String pageType = request.getParameter("output");
 		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
 
@@ -305,14 +305,14 @@ public class UserServlet extends HttpServlet {
 		final int id = Integer.parseInt(request.getParameter("id_user"));
 		System.out.println("update role admin " + id);
 		this.userManager.setRoleAdmin(id);
-		response.sendRedirect("list");
+		response.sendRedirect("admin");
 	}
 	
 	private void updateRoleUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		final int id = Integer.parseInt(request.getParameter("id_user"));
 		System.out.println("update role user " + id);
 		this.userManager.setRoleUser(id);
-		response.sendRedirect("list");
+		response.sendRedirect("admin");
 	}
 
 	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -320,6 +320,6 @@ public class UserServlet extends HttpServlet {
 		
 		this.userManager.deleteUser(id);
 		
-		response.sendRedirect("list");
+		response.sendRedirect("admin");
 	}
 }

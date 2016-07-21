@@ -10,24 +10,31 @@
 
 	<body>
 	<jsp:directive.include file="navBar.jsp"/>
-	<br/><br/><br/><br/><br/><br/>
-	<table class="table table-stripped">
-		<thead>
-			<tr>
-				<!-- ${variable} = même chose que getAttribute en java mais permet d'éviter
-				d'avoir du java	 dans du HTML -->
+	
+	
+	<div class="row">
+        <div class="col-md-offset-1 col-md-10 main" style="margin-top: 100px;">
+          <h1 class="page-header">Administration</h1>
+
+          <h2 class="sub-header">Liste des utilisateurs</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                <th>#</th>
 				<th>${title}</th>
 				<th>Rôle</th>
 				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			
+                </tr>
+              </thead>
+              <tbody>
+              
 		<%
 			List<User> users = (List<User>) request.getAttribute("userList");
 			for(User user1 : users)
 			{%>
 			  <tr>
+			  	<td><%=user1.getId() %></td>
 				<td>
 					<%=user1.getLogin() %>
 				</td>
@@ -54,8 +61,11 @@
 			  </tr>
 			<% }
 		%>
-		
-		</tbody>
-	</table>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+	
 	</body>
 	</html>
