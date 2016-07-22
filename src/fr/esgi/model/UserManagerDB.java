@@ -458,6 +458,7 @@ public class UserManagerDB implements IUserManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		return result == 1;
 	}
@@ -674,5 +675,29 @@ public boolean updatePoids(Integer id, Float poids, Integer taille, Date dateDuJ
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	/*
+	 * Fonction delete Poids 
+	 * 
+	 */
+	@Override
+	public Boolean deletePoids2(Integer id){
+		PreparedStatement state = null;
+
+		try {
+			String deleteUserSQL = "DELETE FROM `suivi_poids` WHERE id = ?";
+									
+			state = (PreparedStatement) this.connection.prepareStatement(deleteUserSQL);
+			state.setInt(1, id);
+			
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

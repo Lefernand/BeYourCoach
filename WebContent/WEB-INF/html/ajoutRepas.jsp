@@ -16,12 +16,8 @@
 		  <h1 class="cover-heading text-center">Ajouter un Repas</h1>
 		  <div class="row">
 		  	<div class="col-sm-offset-1 col-sm-10">
-<<<<<<< HEAD
-		  	<jsp:directive.include file="error.jsp" />
-				<form method="get" action="ajoutRepas" id="form-ajoutMeal" >
-=======
+
 				<form method="get" action="addRepas" id="form-ajoutMeal" >
->>>>>>> 3f15b9bcd1e8c739b4542c8f9ce23e81a2c4df10
 				<div class="form-inline">
 					<input type="radio" name="time" value="PDJ" style="margin: 0 5px;"> Petit Déjeuner 
 					<input type="radio" name="time" value="DEJ" style="margin: 0 5px;"> Déjeuner

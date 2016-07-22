@@ -24,5 +24,6 @@ public interface IUserManager {
 			Integer objectif_poids, String date_naissance, Boolean sexe, String email, String password);
 	boolean updatePoids(Integer id, Float poids, Integer taille, Date dateDuJour, Boolean sexe, Date date_naissance);
 	public void deletePoids(Integer id);
+	Boolean deletePoids2(Integer id);
 	
 }
