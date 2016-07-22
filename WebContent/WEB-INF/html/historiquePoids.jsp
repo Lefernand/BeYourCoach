@@ -35,16 +35,11 @@
 	                <td><%=listPerf.get(i).getMG()%> %</td>
 	                <td><%=listPerf.get(i).getDate()%></td>
 	                <td>
-<!-- 					  <form method="get" action="updatePoids"> -->
-<%-- 					    <input type="hidden" class="update-input-poids" name="id_user" value="<%=user.getId() %>"> --%>
-<%-- 					    <input type="hidden" class="update-input-poids" name="poids" value="<%=listPerf.get(i).getPoids()%>"> --%>
-<!-- 						<button type="button" id="edit-poids" class="btn btn-info adminUser">Editer</button> -->
-<!-- 					  </form> -->
-					  <button type="button" id="edit-poids" class="btn btn-info">Editer</button>
+					  <button data-id="<%=listPerf.get(i).getId() %>" type="button" id="edit-poids" class="btn btn-info">Editer</button>
 					</td>
 					<td>
 					  <form method="get" action="deletePoids">
-						    <input type="hidden" class="delete-input-role" name="id_user" value="<%=listPerf.get(i).getId()%>">
+						    <input type="hidden" class="delete-input-poids" name="id_poids" value="<%=listPerf.get(i).getId()%>">
 							<button type="submit" class="btn btn-danger deleteUser">Effacer</button>
 					  </form>
 					</td>
@@ -58,12 +53,21 @@
 		$( document ).ready(function() {
 		   
 		});
+		
 		$(document).on("click", "#edit-poids", function(e) {
+			var id = $(this)[0].dataset.id;
+			alert(id);
 			var poids = $(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML.split(" ")[0];
-			$(this)[0].className = "btn btn-success";
+			$(this)[0].className = "btn btn-success submitEdit";
 			$(this)[0].id = "";
 			
-			$(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML = "<input type=\"text\" class=\"form-control update-input-poids\" name=\"poids\" value=\""+poids+"\">";
+			$(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML = "<form id=\"updatePoids-"+id+"\" method=\"get\" action=\"updatePoids\"><input type=\"hidden\" class=\"form-control update-input-poids\" name=\"idPoids\" value=\""+id+"\"><input type=\"number\" class=\"form-control update-input-poids\" name=\"poids\" value=\""+poids+"\"></form>";
+		});
+		
+		$(document).on("click", ".submitEdit", function(e) {
+			var id = $(this)[0].dataset.id;
+			alert(id+"tototot submit");
+			$("#updatePoids-"+id).submit();			
 		});
 		</script>
 	</body>

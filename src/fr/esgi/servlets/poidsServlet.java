@@ -18,7 +18,7 @@ import fr.esgi.model.UserManagerDB;
 /**
  * Servlet implementation class poidsServlet
  */
-@WebServlet(name = "poids-servlet", description = "Servlet poids ", urlPatterns = { "/historiquePoids"})
+@WebServlet(name = "poids-servlet", description = "Servlet poids ", urlPatterns = { "/historiquePoids", "/updatePoids", "/deletePoids"})
 public class poidsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -40,7 +40,11 @@ public class poidsServlet extends HttpServlet {
 		
 		if (uri.contains("/historiquePoids")) {
 			this.historiquePoids(request, response);
-		}
+		} else if (uri.contains("/updatePoids")) {
+			this.updatePoids(request, response);
+		} else if (uri.contains("/deletePoids")) {
+			this.deletePoids(request, response);
+		} 
 	}
 
 	/**
@@ -60,6 +64,28 @@ public class poidsServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/WEB-INF/html/historiquePoids.jsp").forward(request, response);
 		//response.sendRedirect("registerPage");
+	}
+	
+	private void updatePoids(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		//on renvoit sur la page registerPage.jps
+		User user = (User) request.getSession().getAttribute(UserServlet.USER_SESSION);
+		
+		Float poids = (float) Integer.parseInt(request.getParameter("poids"));
+		Integer idPoids = Integer.parseInt(request.getParameter("idPoids"));
+		
+		System.out.println(poids + " nouveau poids");
+		System.out.println(idPoids + " id du poids");
+		
+		this.userManager.updatePoids(idPoids, poids, user.getTaille(), java.sql.Date.valueOf(java.time.LocalDate.now()), user.getSexe(), user.getDate_naissance());
+		
+		this.historiquePoids(request, response);
+	}
+	
+	private void deletePoids(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		this.userManager.deletePoids(Integer.parseInt(request.getParameter("id_poids")));
+		
+		this.historiquePoids(request, response);
 	}
 
 }

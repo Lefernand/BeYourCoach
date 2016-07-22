@@ -596,4 +596,83 @@ public class UserManagerDB implements IUserManager {
 		return list_PoidUser;
 	}
 
+/*
+ * Fonction update un poids
+ * 
+ */
+@Override
+public boolean updatePoids(Integer id, Float poids, Integer taille, Date dateDuJour, Boolean sexe, Date date_naissance) {
+	//calcul IMC
+	
+	Float taile_use = (float) (taille*0.01);
+	
+	Float IMC = (float) (poids / (taile_use*taile_use));
+	//calcul Masse graisseuse
+	
+	GregorianCalendar birth = new GregorianCalendar();
+    birth.setTime(date_naissance);
+
+    GregorianCalendar now = new GregorianCalendar();
+
+    Integer age = now.get(GregorianCalendar.YEAR) - birth.get(GregorianCalendar.YEAR);
+
+    
+    Integer sexe_use;
+    if (sexe) {
+		sexe_use = 1;
+	}else{
+		sexe_use = 0;
+	}
+	
+	Float IMG = (float) ((1.20*IMC)+(0.23*age)-(10.8*sexe_use)-5.4);
+	
+	System.out.println("je passe par l'update de de poids");
+	
+	PreparedStatement stmt = null;
+	rs = null;
+	try {
+		String userSQL = "UPDATE `esgi`.`suivi_poids` SET "
+										+ "`poids` = ?, "
+										+ "`IMC` = ?, "
+										+ "`MG` = ? "
+										+ "WHERE `suivi_poids`.`id` = ?;";
+
+		stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+		stmt.setFloat(1, poids);
+		stmt.setFloat(2, IMC);
+		stmt.setFloat(3, IMG);
+		stmt.setInt(4, id);
+
+		System.out.println("je passe la !");
+
+		stmt.executeUpdate();
+
+		stmt.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	return true;
+  }
+	/*
+	 * Fonction delete Poids 
+	 * 
+	 */
+	@Override
+	public void deletePoids(Integer id){
+		PreparedStatement state = null;
+
+		try {
+			String deleteUserSQL = "DELETE FROM `suivi_poids` WHERE id = ?";
+									
+			state = (PreparedStatement) this.connection.prepareStatement(deleteUserSQL);
+			state.setInt(1, id);
+			
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
