@@ -13,20 +13,25 @@
 
 	<body>
 	<jsp:directive.include file="navBar.jsp"/>
-	<br/><br/><br/><br/><br/><br/>
-	<table class="table table-stripped">
-		<thead>
-			<tr>
-				<!-- ${variable} = même chose que getAttribute en java mais permet d'éviter
-				d'avoir du java	 dans du HTML -->
+	
+	
+	<div class="row">
+        <div class="col-md-offset-1 col-md-10 main" style="margin-top: 100px;">
+
+          <h2 class="sub-header">Historique de pesée</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
 				<th>Poids</th>
 				<th>IMC</th>
 				<th>Masse graisseuse</th>
 				<th>Date</th>
 				<th></th>
-			</tr>
-		</thead>
-		<tbody>
+                </tr>
+              </thead>
+              <tbody>
+              
 		<% ArrayList<PerfUser> listPerf = (ArrayList<PerfUser>) request.getAttribute("myPoidsList");
 			for(int i = 0; i < listPerf.size(); i+=1) { %>
 	            <tr>
@@ -35,10 +40,8 @@
 	                <td><%=listPerf.get(i).getMG()%> %</td>
 	                <td><%=listPerf.get(i).getDate()%></td>
 	                <td>
-					  <button data-id="<%=listPerf.get(i).getId() %>" type="button" id="edit-poids" class="btn btn-info">Editer</button>
-					</td>
-					<td>
-					  <form method="get" action="deletePoids">
+					  <button data-id="<%=listPerf.get(i).getId() %>" type="button" id="edit-poids" class="btn btn-info" style="display:inline-block;">Editer</button>
+					  <form method="get" action="deletePoids" style="display:inline-block;">
 						    <input type="hidden" class="delete-input-poids" name="id_poids" value="<%=listPerf.get(i).getId()%>">
 							<button type="submit" class="btn btn-danger deleteUser">Effacer</button>
 					  </form>
@@ -46,8 +49,11 @@
 	            </tr>
         	<% } %>
 		
-		</tbody>
-	</table>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 	
 		<script>
 		$( document ).ready(function() {
