@@ -23,6 +23,14 @@ public class Aliment {
 		this.user_id = user_id;
 	}
 	
+	
+	
+	public Aliment() {
+		super();
+	}
+
+
+
 	public String getNom() {
 		return nom;
 	}
