@@ -17,9 +17,12 @@ public interface IUserManager {
 	boolean setRoleAdmin(Integer id);
 	boolean setRoleUser(Integer id);
 	List<PerfUser> getHistoriquePoids(Integer id);
+	ArrayList<String> getEvolution(Integer id);
 	boolean createUser(String login, String nom, String prenom, Integer taille, Integer objectif_poids,
 			String date_naissance, Boolean sexe, String email, String password);
 	public boolean editProfile(Integer id, String login, String nom, String prenom, Integer taille,
 			Integer objectif_poids, String date_naissance, Boolean sexe, String email, String password);
+	boolean updatePoids(Integer id, Float poids, Integer taille, Date dateDuJour, Boolean sexe, Date date_naissance);
+	public void deletePoids(Integer id);
 	
 }

@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -521,7 +524,7 @@ public class UserManagerDB implements IUserManager {
 		ResultSet rs = null;
 		ArrayList<PerfUser> list_PerfUser = new ArrayList<PerfUser>();
 		try {
-			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? ORDER BY date";
+			String userSQL = "SELECT * FROM suivi_poids WHERE id_user = ? ORDER BY date DESC";
 			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
 			stmt.setInt(1, id);
@@ -552,5 +555,124 @@ public class UserManagerDB implements IUserManager {
 		}
 		return list_PerfUser;
 	}
+	
+	
+	public ArrayList<String> getEvolution(Integer id){
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list_PoidUser = new ArrayList<String>();
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			//On crée des objets Calendar pour récupérer la date d'aujourd'hui et d'il y a une semaine  
+			Calendar cal = Calendar.getInstance();
+			Calendar prevWeek= Calendar.getInstance();
+			
+			prevWeek.add(Calendar.DAY_OF_MONTH, -7);
+			
+			String userSQL = "SELECT poids, date FROM suivi_poids WHERE id_user = ? AND date BETWEEN ? AND ? ORDER BY date";
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
 
+			stmt.setInt(1, id);
+			stmt.setString(2, dateFormat.format(prevWeek.getTime()));
+			stmt.setString(3, dateFormat.format(cal.getTime()));
+			
+			rs = stmt.executeQuery();
+			
+			DateFormat weekDay = new SimpleDateFormat("E");
+			
+			while (rs.next()) {
+				Float poids = rs.getFloat("poids");
+				Date date = rs.getDate("date");
+				String okay = new SimpleDateFormat("E").format(date);
+				
+				String recap = poids + "_" + okay; 
+				list_PoidUser.add(recap);
+			}
+			
+			return list_PoidUser;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list_PoidUser;
+	}
+
+/*
+ * Fonction update un poids
+ * 
+ */
+@Override
+public boolean updatePoids(Integer id, Float poids, Integer taille, Date dateDuJour, Boolean sexe, Date date_naissance) {
+	//calcul IMC
+	
+	Float taile_use = (float) (taille*0.01);
+	
+	Float IMC = (float) (poids / (taile_use*taile_use));
+	//calcul Masse graisseuse
+	
+	GregorianCalendar birth = new GregorianCalendar();
+    birth.setTime(date_naissance);
+
+    GregorianCalendar now = new GregorianCalendar();
+
+    Integer age = now.get(GregorianCalendar.YEAR) - birth.get(GregorianCalendar.YEAR);
+
+    
+    Integer sexe_use;
+    if (sexe) {
+		sexe_use = 1;
+	}else{
+		sexe_use = 0;
+	}
+	
+	Float IMG = (float) ((1.20*IMC)+(0.23*age)-(10.8*sexe_use)-5.4);
+	
+	System.out.println("je passe par l'update de de poids");
+	
+	PreparedStatement stmt = null;
+	rs = null;
+	try {
+		String userSQL = "UPDATE `esgi`.`suivi_poids` SET "
+										+ "`poids` = ?, "
+										+ "`IMC` = ?, "
+										+ "`MG` = ? "
+										+ "WHERE `suivi_poids`.`id` = ?;";
+
+		stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+		stmt.setFloat(1, poids);
+		stmt.setFloat(2, IMC);
+		stmt.setFloat(3, IMG);
+		stmt.setInt(4, id);
+
+		System.out.println("je passe la !");
+
+		stmt.executeUpdate();
+
+		stmt.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	return true;
+  }
+	/*
+	 * Fonction delete Poids 
+	 * 
+	 */
+	@Override
+	public void deletePoids(Integer id){
+		PreparedStatement state = null;
+
+		try {
+			String deleteUserSQL = "DELETE FROM `suivi_poids` WHERE id = ?";
+									
+			state = (PreparedStatement) this.connection.prepareStatement(deleteUserSQL);
+			state.setInt(1, id);
+			
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

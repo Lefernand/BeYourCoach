@@ -1,22 +1,24 @@
 $(function () {
-        /* ChartJS
-         * -------
-         * Here we will create a few charts using ChartJS
-         */
-
-        //--------------
-        //- AREA CHART -
-        //--------------
-
+	
+		$.getJSON("getEvolution", function(data){
+			console.log(data.legend);
+			areaChart(data);
+		});
+	
+	
+	
+	
+	function areaChart(data){
+		
         // Get context with jQuery - using jQuery's .get() method.
         var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-        var areaChartCanvas2 = $("#areaChart2").get(0).getContext("2d");
+        //var areaChartCanvas2 = $("#areaChart2").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
         var areaChart = new Chart(areaChartCanvas);
-        var areaChart2 = new Chart(areaChartCanvas2);
+        //var areaChart2 = new Chart(areaChartCanvas2);
 
         var areaChartData = {
-          labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+          labels: ["lundi","mardi","mercredi","jeudi"],
           datasets: [
             {
               label: "Poids",
@@ -26,10 +28,14 @@ $(function () {
               pointStrokeColor: "#c1c7d1",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: [64.9, 65.6, 67, 65.9, 65, 64.9, 64.8]
+              data: data.value
             }
           ]
         };
+        
+        areaChart.Line(areaChartData, areaChartOptions);
+        //areaChart2.Line(areaChartData2, areaChartOptions);
+	}
         
         var areaChartData2 = {
                 labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
@@ -87,9 +93,9 @@ $(function () {
         };
 
         //Create the line chart
-        areaChart.Line(areaChartData, areaChartOptions);
         
-        areaChart2.Line(areaChartData2, areaChartOptions);
+        
+        
 
         //-------------
         //- PIE CHART -

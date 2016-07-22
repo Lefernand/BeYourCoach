@@ -102,4 +102,86 @@ public class alimentManagerDB {
 			}
 			return true;
 	}
+	
+	public ArrayList<Repas> getRepasJournee(Integer id){
+		System.out.println("je suis dans la fonctionnnnn nuuuuul");
+		Repas historiqueRepasPetitDej = new Repas();
+		Repas historiqueRepasDej = new Repas();
+		Repas historiqueRepasDin = new Repas();
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Aliment> PDJ = new ArrayList<Aliment>();
+		ArrayList<Aliment> DEJ = new ArrayList<Aliment>();
+		ArrayList<Aliment> DIN = new ArrayList<Aliment>();
+		try {
+			String userSQL = "SELECT * FROM aliment WHERE id_user = ? ORDER BY date";
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				Aliment aliment = null;
+				
+				String nom 		 	= rs.getString("nom");
+				String path_image 	= rs.getString("image");
+				String time			= rs.getString("time");
+				Integer energie 	= rs.getInt("energie");
+				Integer quantite	= rs.getInt("quantite");
+				Date date 		 	= rs.getDate("date");
+				
+				System.out.println(nom+ " " +time+ " " +quantite);
+
+				aliment = new Aliment(nom, path_image, time, date, energie, quantite, id);
+				
+				if (time.equals("PDJ")) {
+					PDJ.add(aliment);
+				} else if (time.equals("DEJ")) {
+					DEJ.add(aliment);
+				} else if (time.equals("DIN")) {
+					DIN.add(aliment);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Integer totalPDJ = 0;
+		Integer totalDEJ = 0;
+		Integer totalDIN = 0;
+		
+		historiqueRepasPetitDej.setListAliment(PDJ);
+		historiqueRepasPetitDej.setTime("PDJ");
+		
+		for (int i = 0; i < PDJ.size(); i++) {
+			totalPDJ += PDJ.get(i).getEnergie();
+		}
+		historiqueRepasPetitDej.setEnergieTotal(totalPDJ);
+		
+		historiqueRepasDej.setListAliment(DEJ);
+		historiqueRepasDej.setTime("DEJ");
+		
+		for (int i = 0; i < PDJ.size(); i++) {
+			totalPDJ += PDJ.get(i).getEnergie();
+		}
+		historiqueRepasDej.setEnergieTotal(totalDEJ);
+		
+		historiqueRepasDin.setListAliment(DIN);
+		historiqueRepasDin.setTime("DIN");
+		for (int i = 0; i < PDJ.size(); i++) {
+			totalPDJ += PDJ.get(i).getEnergie();
+		}
+		historiqueRepasDin.setEnergieTotal(totalDIN);
+		
+		ArrayList<Repas> result = new ArrayList<Repas>();
+		
+		result.add(historiqueRepasPetitDej);
+		result.add(historiqueRepasDej);
+		result.add(historiqueRepasDin);
+		
+		return result;
+	}
 }

@@ -277,41 +277,11 @@ public class UserServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
 			}
 		} else {
-
-<<<<<<< HEAD
 			request.setAttribute("user", user);
 			request.setAttribute("action", "profileEdition");
 
 			request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
-=======
-					this.userManager.editProfile(nom, prenom, taille, objectif_poids, sqlStartDate, id, sexe);
-					request.setAttribute("infoMessage", "Vos informations de profils ont été modifié");
-					request.getSession().setAttribute(UserServlet.USER_SESSION,
-							this.userManager.getUser(user.getLogin()));
 
-					request.setAttribute("user", user);
-					request.setAttribute("action", "profileEdition");
-					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
-				} else if (request.getParameter("typeAction").equals("compte")) {
-					Integer id = Integer.parseInt(request.getParameter("id"));
-					String email = request.getParameter("email");
-					String password = request.getParameter("password");
-
-					this.userManager.editCompte(email, password, id);
-
-					request.setAttribute("infoMessage", "Vos informations de compte ont été modifié");
-					request.getSession().setAttribute(UserServlet.USER_SESSION,
-							this.userManager.getUser(user.getLogin()));
-					request.setAttribute("user", user);
-					request.setAttribute("action", "profileEdition");
-					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
-				} else {
-					request.setAttribute("user", user);
-					request.setAttribute("action", "profileEdition");
-					request.getRequestDispatcher("/WEB-INF/html/editProfile.jsp").forward(request, response);
-				}
-			}
->>>>>>> 32fdae98eded4ef6f396fa9e9d721aa95ea02b97
 		}
 	}
 	
