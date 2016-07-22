@@ -35,11 +35,12 @@
 	                <td><%=listPerf.get(i).getMG()%> %</td>
 	                <td><%=listPerf.get(i).getDate()%></td>
 	                <td>
-					  <form method="get" action="updatePoids">
-					    <input type="hidden" class="update-input-role" name="id_user" value="<%=user.getId() %>">
-					    <input type="hidden" class="update-input-role" name="poids" value="<%=user.getId() %>">
-						<button type="submit" class="btn btn-success adminUser">Administrateur</button>
-					  </form>
+<!-- 					  <form method="get" action="updatePoids"> -->
+<%-- 					    <input type="hidden" class="update-input-poids" name="id_user" value="<%=user.getId() %>"> --%>
+<%-- 					    <input type="hidden" class="update-input-poids" name="poids" value="<%=listPerf.get(i).getPoids()%>"> --%>
+<!-- 						<button type="button" id="edit-poids" class="btn btn-info adminUser">Editer</button> -->
+<!-- 					  </form> -->
+					  <button type="button" id="edit-poids" class="btn btn-info">Editer</button>
 					</td>
 					<td>
 					  <form method="get" action="deletePoids">
@@ -52,5 +53,18 @@
 		
 		</tbody>
 	</table>
+	
+		<script>
+		$( document ).ready(function() {
+		   
+		});
+		$(document).on("click", "#edit-poids", function(e) {
+			var poids = $(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML.split(" ")[0];
+			$(this)[0].className = "btn btn-success";
+			$(this)[0].id = "";
+			
+			$(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML = "<input type=\"text\" class=\"form-control update-input-poids\" name=\"poids\" value=\""+poids+"\">";
+		});
+		</script>
 	</body>
 	</html>

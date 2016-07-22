@@ -59,7 +59,7 @@ public class RepasServlet extends HttpServlet {
 		System.out.println(parameters.size());
 		
 		if (parameters.size() <= 1) {
-			response.sendRedirect("ajoutPetitDej");
+			response.sendRedirect("ajoutRepas");
 		}else{
 			ArrayList<Aliment> repas = new ArrayList<Aliment>();
 			String time = request.getParameter("time");
