@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -551,6 +554,46 @@ public class UserManagerDB implements IUserManager {
 			e.printStackTrace();
 		}
 		return list_PerfUser;
+	}
+	
+	
+	public ArrayList<String> getEvolution(Integer id){
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list_PoidUser = new ArrayList<String>();
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			//On crée des objets Calendar pour récupérer la date d'aujourd'hui et d'il y a une semaine  
+			Calendar cal = Calendar.getInstance();
+			Calendar prevWeek= Calendar.getInstance();
+			
+			prevWeek.add(Calendar.DAY_OF_MONTH, -7);
+			
+			String userSQL = "SELECT poids, date FROM suivi_poids WHERE id_user = ? AND date BETWEEN ? AND ? ORDER BY date";
+			stmt = (PreparedStatement) this.connection.prepareStatement(userSQL);
+
+			stmt.setInt(1, id);
+			stmt.setString(2, dateFormat.format(prevWeek.getTime()));
+			stmt.setString(3, dateFormat.format(cal.getTime()));
+			
+			rs = stmt.executeQuery();
+			
+			DateFormat weekDay = new SimpleDateFormat("E");
+			
+			while (rs.next()) {
+				Float poids = rs.getFloat("poids");
+				Date date = rs.getDate("date");
+				String okay = new SimpleDateFormat("E").format(date);
+				
+				String recap = poids + "_" + okay; 
+				list_PoidUser.add(recap);
+			}
+			
+			return list_PoidUser;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list_PoidUser;
 	}
 
 }
