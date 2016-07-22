@@ -63,7 +63,7 @@
 		 	<button type="submit" class="btn btn-success">S'inscrire</button>
 		 	<button type="button" class="btn btn-danger">Connexion</button>
 		 <% } else { %>
-		 	<button type="button" class="btn btn-success">Enregistrer</button>
+		 	<button type="submit" class="btn btn-success">Enregistrer</button>
 		 <% } %>
  	</div>
 </form>

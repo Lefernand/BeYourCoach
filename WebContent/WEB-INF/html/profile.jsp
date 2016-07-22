@@ -19,12 +19,10 @@
 		<div class="inner cover">
 		  <h1 class="cover-heading">Mon compte&nbsp;<a href="profileEdition" class="btn btn-xs btn-info">Editer</a></h1>
 		  <h4 class="cover-heading">Voici les informations de votre compte</h4>
+		  <jsp:directive.include file="error.jsp" />
 				
 		  <div class="row">
-		  	<div class="col-sm-offset-3 col-sm-6">
-			  		<jsp:directive.include file="error.jsp" />
-
-			  		
+		  	<div class="col-sm-offset-1 col-sm-5">
 				
 				<div>
 					<p>Login : <%= user.getLogin() %>  </p>
@@ -34,11 +32,11 @@
 				</div>
 				
 			</div>
-		  	<div class="col-sm-offset-1 col-sm-4">
+		  	<div class="col-sm-5">
 				
 				<div>
 					<p>Ma taille : <%= user.getTaille() %> cm</p>
-					<p>Mon poids : A AJOUTER kg</p>
+					<p>Mon poids : <%= user.getObjectif_poids() %> kg</p>
 					<p>Mon objectif poids: <%= user.getObjectif_poids() %> kg</p>
 					<p> date de naissance : <%= user.getDate_naissance() %></p>
 					<p> inscrit le : <%= user.getDate_creation() %></p>

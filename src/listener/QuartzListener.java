@@ -27,7 +27,7 @@ public class QuartzListener extends QuartzInitializerListener {
             Scheduler scheduler = factory.getScheduler();
             JobDetail jobDetail = JobBuilder.newJob(JobEmail.class).build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
-                    CronScheduleBuilder.cronSchedule("0 0/5 * 1/1 * ? *")).startNow().build();
+                    CronScheduleBuilder.cronSchedule("0 0 12 1/1 * ? *")).startNow().build();
             scheduler.scheduleJob(jobDetail, trigger);
             scheduler.start();
         } catch (Exception e) {
