@@ -56,7 +56,6 @@
 		
 		$(document).on("click", "#edit-poids", function(e) {
 			var id = $(this)[0].dataset.id;
-			alert(id);
 			var poids = $(this)[0].parentElement.parentElement.firstChild.nextElementSibling.innerHTML.split(" ")[0];
 			$(this)[0].className = "btn btn-success submitEdit";
 			$(this)[0].id = "";
@@ -66,7 +65,6 @@
 		
 		$(document).on("click", ".submitEdit", function(e) {
 			var id = $(this)[0].dataset.id;
-			alert(id+"tototot submit");
 			$("#updatePoids-"+id).submit();			
 		});
 		</script>
